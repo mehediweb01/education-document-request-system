@@ -1,27 +1,19 @@
-import Image from "next/image";
-import Link from "next/link";
-import { FaHome } from "react-icons/fa";
-import { IoLogInOutline } from "react-icons/io5";
+import { RequireRole } from "@/lib/auth";
+import { PropsSearchParams } from "@/types/type";
+import AdminDashboard from "../components/dashboard/AdminDashboard";
+import StudentDashboard from "../components/dashboard/StudentDashboard";
 
-const Home = () => {
-  return (
-    <div className="flex justify-between items-center gap-16 mx-8">
-      <Image src="/images/logo.png" alt="logo" width={100} height={100} />
-      <ul className="flex justify-center items-center gap-2">
-        <li>
-          <Link href={"/"} className="flex items-center gap-1">
-            Home <FaHome className="size-4" />
-          </Link>
-        </li>
-        <span className="text-gray-400 font-bold">|</span>
-        <li>
-          <Link href={"/login"} className="flex items-center gap-1">
-            Login <IoLogInOutline className="size-5" />
-          </Link>
-        </li>
-      </ul>
-    </div>
-  );
+const Home = async ({ searchParams }: PropsSearchParams) => {
+  const searchParam = await searchParams;
+  const role = searchParam.role;
+
+  RequireRole(role);
+
+  if (role === "student") {
+    return <StudentDashboard />;
+  } else {
+    return <AdminDashboard />;
+  }
 };
 
 export default Home;

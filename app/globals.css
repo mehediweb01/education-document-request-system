@@ -5,6 +5,11 @@
 
 @theme {
   --font-inter: var(--font-inter);
+  --font-montserrat: var(--font-montserrat);
+  --font-roboto: var(--font-roboto);
+  --color-green: #00823e;
+  --color-eerie-black: #1d1d1d;
+  --color-philippine-yellow: #fecb00;
 }
 
 @theme inline {
