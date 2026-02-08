@@ -1,5 +1,5 @@
 import Container from "@/components/common/Container";
-import Navbar from "@/components/common/Navbar";
+import Navbar from "@/components/common/navbar/Navbar";
 import { connectDB } from "@/mongodb/connectDB";
 import type { Metadata } from "next";
 import { Inter, Montserrat, Roboto } from "next/font/google";
