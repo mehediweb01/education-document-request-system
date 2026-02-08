@@ -5,16 +5,14 @@ import logo from "@/public/images/logo.png";
 import { LogIn, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import React from "react";
+import { useSearchParams } from "next/navigation";
+import React, { JSX } from "react";
 
 const liClassName =
   "text-white font-montserrat font-medium hover:text-eerie-black hover:font-bold hover:underline hover:underline-offset-4 hover:decoration-2 transition-colors duration-300 text-sm sm:text-base";
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = (): JSX.Element => {
   const role = useSearchParams().get("role");
-  const path = usePathname();
-  const pathname = path.split("/")[1];
 
   return (
     <div className="flex justify-between items-center gap-8 px-4 py-2 sticky top-0 left-0 right-0 rounded-md overflow-auto bg-linear-to-br from-white to-black/40 z-50">
@@ -39,22 +37,19 @@ const Navbar: React.FC = () => {
         </ul>
       </div>
       <div className="flex line-center gap-4">
-        {pathname !== "login" && (
-          <Link
-            href="/login"
-            className={`${liClassName} flex gap-1 items-center`}
-          >
-            <LogIn /> Login
-          </Link>
-        )}
-        {role === "student" && (
-          <Link
-            href={`${role === "student" ? "/register?role=student" : "/login"}`}
-            className={`${liClassName} flex gap-1 items-center`}
-          >
-            <User /> Register
-          </Link>
-        )}
+        <Link
+          href={`/login`}
+          className={`${liClassName} flex gap-1 items-center`}
+        >
+          <LogIn /> Login
+        </Link>
+
+        <Link
+          href={`/register`}
+          className={`${liClassName} flex gap-1 items-center`}
+        >
+          <User /> Register
+        </Link>
       </div>
     </div>
   );

@@ -130,3 +130,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .input {
+    @apply px-2 py-1 rounded-md w-full border border-gray-300 focus:outline-none  focus:shadow-inner focus:shadow-sky-300/70 focus:border focus:border-sky-500/40;
+  }
+
+  label {
+    @apply text-base font-semibold font-inter tracking-wide;
+  }
+}
