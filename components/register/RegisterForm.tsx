@@ -1,7 +1,10 @@
 "use client";
 
+import { ChangeEvent, InputState } from "@/types/type";
+import axios from "axios";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { toast } from "react-toastify";
 import { Button } from "../ui/button";
 
 const RegisterForm = () => {
@@ -10,9 +13,65 @@ const RegisterForm = () => {
     React.Dispatch<React.SetStateAction<boolean>>,
   ] = useState(false);
 
+  const [inputValue, setInputValue] = useState<InputState>({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    role: "student",
+  });
+
+  const handleInputChange = (e: ChangeEvent) => {
+    const { name, value } = e.target;
+
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("From submitted!");
+
+    try {
+      const payload = {
+        name: inputValue.name?.trim(),
+        email: inputValue.email?.trim(),
+        password: inputValue.password?.trim(),
+        confirmPassword: inputValue.confirmPassword?.trim(),
+        gender: inputValue.gender?.trim(),
+        role: "student",
+      };
+
+      if (payload.password !== payload.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
+      const response = await axios.post("/api/register", payload);
+
+      const data = response.data;
+
+      if (data) {
+        toast.success("User registered successfully");
+      }
+
+      setInputValue({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        gender: "",
+        role: "student",
+      });
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.message || "Something went wrong!");
+      } else {
+        toast.error("Something went wrong, Please try again!");
+      }
+    }
   };
 
   return (
@@ -34,6 +93,9 @@ const RegisterForm = () => {
             id="name"
             className="input"
             placeholder="John Doe"
+            name="name"
+            onChange={handleInputChange}
+            value={inputValue.name}
             required
           />
         </div>
@@ -45,7 +107,10 @@ const RegisterForm = () => {
             type="email"
             id="email"
             className="input"
+            name="email"
             placeholder="demo@gmail.com"
+            onChange={handleInputChange}
+            value={inputValue.email}
             required
           />
         </div>
@@ -57,8 +122,11 @@ const RegisterForm = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              name="password"
               className="input relative pe-8"
               placeholder="*******"
+              onChange={handleInputChange}
+              value={inputValue.password}
               required
             />
             <div className="absolute right-14">
@@ -67,6 +135,7 @@ const RegisterForm = () => {
                   onClick={() => setShowPassword(false)}
                   variant="ghost"
                   className="hover:cursor-pointer"
+                  type="button"
                 >
                   <FiEye className="w-12 h-12" />
                 </Button>
@@ -75,6 +144,7 @@ const RegisterForm = () => {
                   onClick={() => setShowPassword(true)}
                   variant="ghost"
                   className="hover:cursor-pointer"
+                  type="button"
                 >
                   <FiEyeOff className="w-12 h-12" />
                 </Button>
@@ -89,8 +159,11 @@ const RegisterForm = () => {
           <input
             type="password"
             id="confirm-password"
-            className="input"
+            className={`input ${inputValue.password !== inputValue.confirmPassword ? "border-red-500" : ""}`}
             placeholder="*******"
+            onChange={handleInputChange}
+            value={inputValue.confirmPassword}
+            name="confirmPassword"
             required
           />
         </div>
@@ -98,10 +171,17 @@ const RegisterForm = () => {
         {/* gender */}
         <div>
           <label htmlFor="gender">Gender:</label>
-          <select name="gender" id="gender" className="input" required>
+          <select
+            name="gender"
+            id="gender"
+            className="input"
+            onChange={handleInputChange}
+            value={inputValue.gender}
+            required
+          >
+            <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="other">Other</option>
           </select>
         </div>
 

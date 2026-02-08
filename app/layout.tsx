@@ -3,6 +3,7 @@ import Navbar from "@/components/common/navbar/Navbar";
 import { connectDB } from "@/mongodb/connectDB";
 import type { Metadata } from "next";
 import { Inter, Montserrat, Roboto } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 const inter = Inter({
@@ -44,6 +45,7 @@ export default async function RootLayout({
       >
         <Navbar />
         <Container>{children}</Container>
+        <ToastContainer autoClose={2000} position="top-right" theme="colored" />
       </body>
     </html>
   );
