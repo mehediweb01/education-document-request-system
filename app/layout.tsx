@@ -1,5 +1,6 @@
 import Container from "@/components/common/Container";
 import Navbar from "@/components/common/Navbar";
+import { connectDB } from "@/mongodb/connectDB";
 import type { Metadata } from "next";
 import { Inter, Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
@@ -28,11 +29,14 @@ export const metadata: Metadata = {
     "Educational Document Request & Approval System with role based access.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // database connect
+  await connectDB();
+
   return (
     <html lang="en">
       <body
