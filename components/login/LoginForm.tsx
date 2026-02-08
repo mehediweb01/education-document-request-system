@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Button } from "../ui/button";
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const [showPassword, setShowPassword]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>,
@@ -22,22 +22,10 @@ const RegisterForm = () => {
     >
       <div className="mb-4">
         <h1 className="text-center font-bold font-montserrat text-base sm:text-xl md:text-2xl tracking-[1px] border-b border-dashed border-sky-400 rounded-sm pb-2">
-          Register
+          Login
         </h1>
       </div>
       <div className="space-y-3">
-        {/* name */}
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            className="input"
-            placeholder="John Doe"
-            required
-          />
-        </div>
-
         {/* email */}
         <div>
           <label htmlFor="email">Email:</label>
@@ -83,49 +71,13 @@ const RegisterForm = () => {
           </div>
         </div>
 
-        {/* confirm password */}
-        <div>
-          <label htmlFor="confirm-password">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirm-password"
-            className="input"
-            placeholder="*******"
-            required
-          />
-        </div>
-
-        {/* gender */}
-        <div>
-          <label htmlFor="gender">Gender:</label>
-          <select name="gender" id="gender" className="input" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        {/* role */}
-        <div>
-          <label htmlFor="role">Role:</label>
-          <select
-            name="role"
-            id="role"
-            disabled
-            required
-            className="input disabled:cursor-not-allowed disabled:bg-gray-200"
-          >
-            <option value={"student"}>STUDENT</option>
-          </select>
-        </div>
-
-        {/* submit button */}
-        <div className="flex justify-center ">
+        {/* button */}
+        <div className="flex justify-center items-center">
           <Button
             type="submit"
-            className="bg-sky-400 hover:bg-sky-600 text-white btn-animate hover:cursor-pointer w-1/2 text-base sm:text-xl"
+            className="w-1/2 text-base sm:text-xl font-inter font-semibold tracking-[1px] py-2 rounded-md hover:cursor-pointer btn-animate"
           >
-            Register
+            Login
           </Button>
         </div>
       </div>
@@ -133,4 +85,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

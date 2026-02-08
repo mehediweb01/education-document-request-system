@@ -139,4 +139,8 @@
   label {
     @apply text-base font-semibold font-inter tracking-wide;
   }
+
+  .btn-animate {
+    @apply transition-all duration-300 ease-in-out active:scale-95;
+  }
 }
