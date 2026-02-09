@@ -47,7 +47,7 @@ const Navbar: React.FC = (): JSX.Element => {
                       liClassName
                     }
                   >
-                    <Link href={`${items.href}/?role=${role}`}>
+                    <Link href={`${items.href}`}>
                       {items.name}
                     </Link>
                   </li>
@@ -61,7 +61,7 @@ const Navbar: React.FC = (): JSX.Element => {
                       liClassName
                     }
                   >
-                    <Link href={`${items.href}/?role=${role}`}>
+                    <Link href={`${items.href}`}>
                       {items.name}
                     </Link>
                   </li>

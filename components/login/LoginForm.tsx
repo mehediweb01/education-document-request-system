@@ -1,7 +1,11 @@
 "use client";
 
+import { ChangeEvent, InputState } from "@/types/type";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { toast } from "react-toastify";
 import { Button } from "../ui/button";
 
 const LoginForm = () => {
@@ -10,9 +14,57 @@ const LoginForm = () => {
     React.Dispatch<React.SetStateAction<boolean>>,
   ] = useState(false);
 
+  const [inputValue, setInputValue] = useState<InputState>({
+    email: "",
+    password: "",
+  });
+
+  const router = useRouter();
+
+  const handleInputChange = (e: ChangeEvent) => {
+    const { name, value } = e.target;
+
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("From submitted!");
+
+    try {
+      const payload = {
+        email: inputValue.email?.trim(),
+        password: inputValue.password?.trim(),
+      };
+
+      const response = await axios.post("/api/login", payload);
+
+      const data = response.data;
+
+      if (data) {
+        toast.success("User logged in successful");
+        if (data.user.role === "admin") {
+          router.push(`/?role=admin`);
+        } else if (data.user.role === "student") {
+          router.push(`/?role=student`);
+        } else {
+          router.push("/");
+        }
+      }
+
+      setInputValue({
+        email: "",
+        password: "",
+      });
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data.message);
+      } else {
+        toast.error("Something went wrong! Please try again later.");
+      }
+    }
   };
 
   return (
@@ -34,6 +86,9 @@ const LoginForm = () => {
             id="email"
             className="input"
             placeholder="demo@gmail.com"
+            value={inputValue.email}
+            onChange={handleInputChange}
+            name="email"
             required
           />
         </div>
@@ -47,6 +102,9 @@ const LoginForm = () => {
               id="password"
               className="input relative pe-8"
               placeholder="*******"
+              value={inputValue.password}
+              onChange={handleInputChange}
+              name="password"
               required
             />
             <div className="absolute right-14">
@@ -55,6 +113,7 @@ const LoginForm = () => {
                   onClick={() => setShowPassword(false)}
                   variant="ghost"
                   className="hover:cursor-pointer"
+                  type="button"
                 >
                   <FiEye className="w-12 h-12" />
                 </Button>
@@ -63,6 +122,7 @@ const LoginForm = () => {
                   onClick={() => setShowPassword(true)}
                   variant="ghost"
                   className="hover:cursor-pointer"
+                  type="button"
                 >
                   <FiEyeOff className="w-12 h-12" />
                 </Button>

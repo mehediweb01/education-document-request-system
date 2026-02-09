@@ -1,18 +1,31 @@
 import { RequireRole } from "@/lib/auth";
-import { PropsSearchParams } from "@/types/type";
-import AdminDashboard from "../components/dashboard/AdminDashboard";
-import StudentDashboard from "../components/dashboard/StudentDashboard";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-const Home = async ({ searchParams }: PropsSearchParams) => {
-  const searchParam = await searchParams;
-  const role = searchParam.role;
+const Home = async () => {
+  const cookie = await cookies();
+  const token = cookie.get("token")?.value;
 
-  RequireRole(role);
+  if (token) {
+    const decoded = jwt.verify(
+      token as string,
+      process.env.JWT_SECRET as string,
+    ) as {
+      role: string;
+    };
 
-  if (role === "student") {
-    return <StudentDashboard />;
+    RequireRole(decoded.role);
+
+    if (decoded.role === "admin") {
+      redirect("/dashboard/admin");
+    } else if (decoded.role === "student") {
+      redirect("/dashboard/student");
+    } else {
+      redirect("/login");
+    }
   } else {
-    return <AdminDashboard />;
+    redirect("/login");
   }
 };
 

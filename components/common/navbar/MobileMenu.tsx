@@ -18,7 +18,7 @@ const MobileMenu = ({ role, pathname }: { role: string; pathname: string }) => {
                   liClassName
                 }
               >
-                <Link href={`${items.href}/?role=${role}`}>{items.name}</Link>
+                <Link href={`${items.href}`}>{items.name}</Link>
               </li>
             ))
           : navItemsForStudent.map((items) => (
@@ -30,7 +30,7 @@ const MobileMenu = ({ role, pathname }: { role: string; pathname: string }) => {
                   liClassName
                 }
               >
-                <Link href={`${items.href}/?role=${role}`}>{items.name}</Link>
+                <Link href={`${items.href}`}>{items.name}</Link>
               </li>
             ))}
       </ul>
