@@ -13,7 +13,7 @@ const MobileMenu = ({ role, pathname }: { role: string; pathname: string }) => {
               <li
                 key={items.id}
                 className={
-                  `${pathname === items.href.split("/")[1] ? "active" : "text-white"}` +
+                  `${pathname === items.href.split("/")[1].split("?")[0] ? "active" : "text-white"}` +
                   " " +
                   liClassName
                 }
@@ -25,7 +25,7 @@ const MobileMenu = ({ role, pathname }: { role: string; pathname: string }) => {
               <li
                 key={items.id}
                 className={
-                  `${pathname === items.href.split("/")[1] ? "active" : "text-white"}` +
+                  `${pathname === items.href.split("/")[1].split("?")[0] ? "active" : "text-white"}` +
                   " " +
                   liClassName
                 }

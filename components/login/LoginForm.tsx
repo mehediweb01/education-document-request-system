@@ -46,12 +46,13 @@ const LoginForm = () => {
       if (data) {
         toast.success("User logged in successful");
         if (data.user.role === "admin") {
-          router.push(`/?role=admin`);
+          router.push(`/dashboard/admin`);
         } else if (data.user.role === "student") {
-          router.push(`/?role=student`);
+          router.push(`/dashboard/student`);
         } else {
           router.push("/");
         }
+        router.refresh();
       }
 
       setInputValue({

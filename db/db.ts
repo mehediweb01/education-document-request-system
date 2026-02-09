@@ -3,7 +3,7 @@ import { NavItem } from "@/types/type";
 export const navItemsForStudent: NavItem[] = [
   {
     id: 1,
-    href: "/",
+    href: "/dashboard/student",
     name: "Dashboard",
   },
   {
@@ -27,7 +27,7 @@ export const navItemsForAdmin: NavItem[] = [
   {
     id: 1,
     name: "Dashboard",
-    href: "/",
+    href: "/dashboard/admin",
   },
   {
     id: 2,
