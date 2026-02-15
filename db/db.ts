@@ -40,3 +40,25 @@ export const navItemsForAdmin: NavItem[] = [
     href: "/account?role=admin",
   },
 ];
+
+export const guideLine: {
+  id: number;
+  title: string;
+  description: string;
+}[] = [
+  {
+    id: 1,
+    title: "step #1",
+    description: `click the "Request Now" button & submit your request`,
+  },
+  {
+    id: 2,
+    title: "step #2",
+    description: `admin reviews & uploads the document`,
+  },
+  {
+    id: 3,
+    title: "step #3",
+    description: `download your approved document`,
+  },
+];
