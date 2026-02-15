@@ -1,5 +1,5 @@
+import { User } from "@/models/user";
 import { connectDB } from "@/mongodb/connectDB";
-import { User } from "@/schemas/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
@@ -50,14 +50,25 @@ export const POST = async (req: Request) => {
       }
 
       // jwt
-      const token = await jwt.sign(
+      const accessToken = await jwt.sign(
         {
           user_id: user._id,
           role: user.role,
         },
         process.env.JWT_SECRET as string,
         {
-          expiresIn: "1d",
+          expiresIn: "15m", // 15 minutes
+        },
+      );
+
+      const refreshToken = await jwt.sign(
+        {
+          user_id: user._id,
+          role: user.role,
+        },
+        process.env.JWT_REFRESH_SECRET as string,
+        {
+          expiresIn: "7d", // 7 days
         },
       );
 
@@ -74,11 +85,19 @@ export const POST = async (req: Request) => {
         },
       );
 
-      response.cookies.set("token", token, {
+      response.cookies.set("token", accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
-        maxAge: 60 * 60 * 24,
+        maxAge: 15 * 60, // 15 minutes
+        path: "/",
+      });
+
+      response.cookies.set("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60, // 7 days
         path: "/",
       });
 

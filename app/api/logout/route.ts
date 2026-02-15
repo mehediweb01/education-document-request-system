@@ -11,6 +11,7 @@ export const POST = async () => {
   );
 
   response.cookies.delete("token");
+  response.cookies.delete("refreshToken");
 
   return response;
 };
