@@ -1,8 +1,10 @@
 import Container from "@/components/common/Container";
 import Navbar from "@/components/common/navbar/Navbar";
+import Loading from "@/loading";
 import { connectDB } from "@/mongodb/connectDB";
 import type { Metadata } from "next";
 import { Inter, Montserrat, Roboto } from "next/font/google";
+import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
@@ -44,7 +46,9 @@ export default async function RootLayout({
         className={` ${inter.variable} ${montserrat.variable} ${roboto.variable} antialiased`}
       >
         <Navbar />
-        <Container>{children}</Container>
+        <Suspense fallback={<Loading />}>
+          <Container>{children}</Container>
+        </Suspense>
         <ToastContainer autoClose={2000} position="top-right" theme="colored" />
       </body>
     </html>
