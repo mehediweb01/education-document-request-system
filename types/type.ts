@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export type NavItem = {
   id: number;
   href: string;
@@ -23,3 +25,7 @@ export type ChangeEvent = React.ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 >;
 
+export type MongoObject = {
+  _id: ObjectId | string;
+  [key: string]: unknown;
+};

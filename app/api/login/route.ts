@@ -57,7 +57,7 @@ export const POST = async (req: Request) => {
         },
         process.env.JWT_SECRET as string,
         {
-          expiresIn: "15m", // 15 minutes
+          expiresIn: "1d", // 1day
         },
       );
 
@@ -89,7 +89,7 @@ export const POST = async (req: Request) => {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
-        maxAge: 15 * 60, // 15 minutes
+        maxAge: 24 * 60 * 60, // 1day
         path: "/",
       });
 

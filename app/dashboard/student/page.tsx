@@ -1,7 +1,6 @@
 import InfoCard from "@/components/dashboard/InfoCard";
-import GuideLineCard from "@/components/dashboard/student/GuideLineCard";
+import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
 import RequestDocumentHero from "@/components/dashboard/student/RequestDocumentHero";
-import { guideLine } from "@/db/db";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -47,26 +46,8 @@ const StudentPage = async () => {
             </InfoCard>
           </div>
         </div>
-        {/* request creation process */}
-        <div className="w-full sm:w-[40%] lg:w-[25%] bg-green h-full sm:min-h-screen p-8 space-y-4 rounded-lg sm:mt-0 mt-8">
-          <div className="shadow-md shadow-black bg-white rounded-md pe-2 pb-2 mb-8">
-            <div className="shadow-md shadow-black bg-white rounded-md pe-2 pb-2">
-              <div className="shadow-md shadow-black bg-white px-2 py-1 rounded-md">
-                <p className="text-sm sm:text-base font-semibold capitalize text-green font-montserrat">
-                  <span className="text-2xl text-green font-bold font-montserrat">
-                    3
-                  </span>{" "}
-                  essay step to create a request{" "}
-                </p>
-              </div>
-            </div>
-          </div>
-          {guideLine.map((item) => (
-            <div key={item.id}>
-              <GuideLineCard {...item} />
-            </div>
-          ))}
-        </div>
+
+        <RequestCreationProcess />
       </div>
     </>
   );

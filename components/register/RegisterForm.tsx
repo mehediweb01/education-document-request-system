@@ -2,6 +2,7 @@
 
 import { ChangeEvent, InputState } from "@/types/type";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -12,7 +13,6 @@ const RegisterForm = () => {
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>,
   ] = useState(false);
-
   const [inputValue, setInputValue] = useState<InputState>({
     name: "",
     email: "",
@@ -21,6 +21,8 @@ const RegisterForm = () => {
     gender: "",
     role: "student",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleInputChange = (e: ChangeEvent) => {
     const { name, value } = e.target;
@@ -35,6 +37,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const payload = {
         name: inputValue.name?.trim(),
         email: inputValue.email?.trim(),
@@ -46,6 +49,7 @@ const RegisterForm = () => {
 
       if (payload.password !== payload.confirmPassword) {
         toast.error("Passwords do not match");
+        setLoading(false);
         return;
       }
 
@@ -54,7 +58,9 @@ const RegisterForm = () => {
       const data = response.data;
 
       if (data) {
+        setLoading(false);
         toast.success("User registered successfully");
+        router.push("/login");
       }
 
       setInputValue({
@@ -66,6 +72,7 @@ const RegisterForm = () => {
         role: "student",
       });
     } catch (err: unknown) {
+      setLoading(false);
       if (axios.isAxiosError(err)) {
         toast.error(err.response?.data?.message || "Something went wrong!");
       } else {
@@ -203,9 +210,11 @@ const RegisterForm = () => {
         <div className="flex justify-center ">
           <Button
             type="submit"
-            className="bg-sky-400 hover:bg-sky-600 text-white btn-animate hover:cursor-pointer w-1/2 text-base sm:text-xl"
+            className="bg-sky-400 hover:bg-sky-600 text-white btn-animate hover:cursor-pointer w-1/2 text-base sm:text-xl disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-700"
+            disabled={loading}
           >
-            Register
+            Register{" "}
+            <span className="animate-pulse">{loading ? "..." : ""}</span>
           </Button>
         </div>
       </div>

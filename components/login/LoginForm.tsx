@@ -13,11 +13,11 @@ const LoginForm = () => {
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>,
   ] = useState(false);
-
   const [inputValue, setInputValue] = useState<InputState>({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -34,6 +34,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const payload = {
         email: inputValue.email?.trim(),
         password: inputValue.password?.trim(),
@@ -53,6 +54,7 @@ const LoginForm = () => {
           router.push("/");
         }
         router.refresh();
+        setLoading(false);
       }
 
       setInputValue({
@@ -60,6 +62,7 @@ const LoginForm = () => {
         password: "",
       });
     } catch (err: unknown) {
+      setLoading(false);
       if (axios.isAxiosError(err)) {
         toast.error(err.response?.data.message);
       } else {
@@ -136,9 +139,10 @@ const LoginForm = () => {
         <div className="flex justify-center items-center">
           <Button
             type="submit"
-            className="w-1/2 text-base sm:text-xl font-inter font-semibold tracking-[1px] py-2 rounded-md hover:cursor-pointer btn-animate"
+            className="w-1/2 text-base sm:text-xl font-inter font-semibold tracking-[1px] py-2 rounded-md hover:cursor-pointer btn-animate disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-700 "
+            disabled={loading}
           >
-            Login
+            Login <span className=" animate-pulse">{loading ? "..." : ""}</span>
           </Button>
         </div>
       </div>
