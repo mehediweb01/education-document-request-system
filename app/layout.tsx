@@ -1,4 +1,5 @@
 import Container from "@/components/common/Container";
+import Footer from "@/components/common/footer/Footer";
 import Navbar from "@/components/common/navbar/Navbar";
 import Loading from "@/loading";
 import { connectDB } from "@/mongodb/connectDB";
@@ -49,6 +50,7 @@ export default async function RootLayout({
         <Suspense fallback={<Loading />}>
           <Container>{children}</Container>
         </Suspense>
+        <Footer />
         <ToastContainer autoClose={2000} position="top-right" theme="colored" />
       </body>
     </html>
