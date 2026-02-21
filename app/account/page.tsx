@@ -1,3 +1,5 @@
+import AdminAccount from "@/components/account/admin/AdminAccount";
+import StudentAccount from "@/components/account/student/StudentAccount";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -14,11 +16,13 @@ const Account = async () => {
     role: string;
   };
 
-  return (
-    <div>
-      <h1>{decoded.role === "admin" ? "admin" : "student"} Account</h1>
-    </div>
-  );
+  if (decoded.role === "admin") {
+    return <AdminAccount />;
+  } else if (decoded.role === "student") {
+    return <StudentAccount />;
+  } else {
+    redirect("/login");
+  }
 };
 
 export default Account;
