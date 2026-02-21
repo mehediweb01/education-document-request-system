@@ -3,7 +3,7 @@ import { User } from "@/models/user";
 
 export const getUserById = async (userId: string) => {
   try {
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select("-password").lean();
     return replaceMongoIdInObject(user);
   } catch (error) {
     console.error("Error fetching user data:", error);

@@ -6,8 +6,12 @@ export const replaceMongoIdInObject = <T extends MongoObject>(
 ): (Omit<T, "_id"> & { id: string }) | null => {
   if (!obj) return null;
 
-  const { _id, ...updatedObj } = { ...obj, id: obj._id };
-  return updatedObj as Omit<T, "_id"> & { id: string };
+  const { _id, ...rest } = obj;
+
+  return {
+    ...rest,
+    id: _id.toString(),
+  };
 };
 
 export const replaceMongoIdInArray = <T extends MongoObject>(
@@ -16,7 +20,7 @@ export const replaceMongoIdInArray = <T extends MongoObject>(
   if (!arr) return [];
 
   const mappedArray = arr.map((item) => {
-    const { _id, ...updatedArrayItem } = { ...item, id: item._id };
+    const { _id, ...updatedArrayItem } = { ...item, id: item._id.toString() };
     return updatedArrayItem as Omit<T, "_id"> & { id: string };
   });
 

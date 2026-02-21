@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { UserProps } from "@/interface/interface";
 
-const RequestDocumentForm = ({ user }: { user: UserProps }) => {
+const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // handle the form submission logic here
-    alert(`Form submitted for user ID: ${user.id}`);
+    alert(`Form submitted for user ID: ${user?.id}`);
   };
 
   console.log(user);
@@ -62,7 +62,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps }) => {
             type="email"
             disabled
             className="input disabled:text-gray-400 disabled:cursor-not-allowed"
-            value={user.email}
+            value={user?.email}
           />
         </div>
         <div>
