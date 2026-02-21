@@ -62,3 +62,25 @@ export const guideLine: {
     description: `download your approved document`,
   },
 ];
+
+export const documentTypes: {
+  id: number;
+  name: string;
+}[] = [
+  {
+    id: 1,
+    name: "Semester Result Sheet",
+  },
+  {
+    id: 2,
+    name: "CGPA Certificate",
+  },
+  {
+    id: 3,
+    name: "Testimonials",
+  },
+  {
+    id: 4,
+    name: "Course Completion Certificate",
+  },
+];
