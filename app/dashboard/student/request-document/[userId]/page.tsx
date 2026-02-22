@@ -4,6 +4,11 @@ import { getUserById } from "@/queries/users";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Request Documents form",
+  description: "This page allows students to request a document",
+};
+
 const RequestDocument = async ({ params }: { params: { userId: string } }) => {
   const cookie = await cookies();
   const token = cookie.get("token")?.value;

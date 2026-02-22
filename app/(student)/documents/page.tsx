@@ -7,6 +7,11 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Available documents",
+  description: "This page shows the available documents that can be requested",
+};
+
 const DocumentsPage = async () => {
   const cookie = await cookies();
   const token = cookie.get("token")?.value;

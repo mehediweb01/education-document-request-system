@@ -8,17 +8,17 @@ export const navItemsForStudent: NavItem[] = [
   },
   {
     id: 2,
-    href: "/documents?role=student",
+    href: "/documents",
     name: "Documents",
   },
   {
     id: 3,
-    href: "/request-history?role=student",
+    href: "/request-history",
     name: "Request History",
   },
   {
     id: 4,
-    href: "/account?role=student",
+    href: "/account",
     name: "Account",
   },
 ];
@@ -32,12 +32,12 @@ export const navItemsForAdmin: NavItem[] = [
   {
     id: 2,
     name: "Documents Request",
-    href: "/documents-request?role=admin",
+    href: "/documents-request",
   },
   {
     id: 3,
     name: "Account",
-    href: "/account?role=admin",
+    href: "/account",
   },
 ];
 

@@ -2,6 +2,11 @@ import LoginForm from "@/components/login/LoginForm";
 import logo from "@/public/images/logo.png";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Login",
+  description: "Login to your account",
+};
+
 const LoginPage = async () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 place-items-center items-center min-h-[80vh]">

@@ -5,6 +5,11 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Student dashboard",
+  description: "This is the student dashboard page",
+};
+
 const StudentPage = async () => {
   const token = (await cookies()).get("token")?.value;
 

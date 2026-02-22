@@ -2,6 +2,7 @@
 
 import { navItemsForAdmin, navItemsForStudent } from "@/db/db";
 import { UserProps } from "@/interface/interface";
+import { replaceMongoIdInObject } from "@/lib/convertData";
 import logo from "@/public/images/logo.png";
 import axios from "axios";
 import { LogIn, User } from "lucide-react";
@@ -33,12 +34,15 @@ const Navbar: React.FC = (): JSX.Element => {
       const res = await axios.get("/api/auth/me");
 
       if (res.status === 200) {
-        setUser(res.data.user);
+        const newUser = replaceMongoIdInObject(res.data.user);
+        setUser(newUser);
       }
     };
 
     checkAuthorization();
   }, [router, pathname]);
+
+  console.log({ user });
 
   const handleLogout = async () => {
     try {
@@ -69,24 +73,32 @@ const Navbar: React.FC = (): JSX.Element => {
                   <li
                     key={items.id}
                     className={
-                      `${pathname === items.href.split("/")[1].split("?")[0] ? "active" : ""}` +
+                      `${pathname === items.href.split("/")[1] ? "active" : ""}` +
                       " " +
                       liClassName
                     }
                   >
-                    <Link href={`${items.href}`}>{items.name}</Link>
+                    <Link
+                      href={`${items.href}/${items.name === "Account" ? user?.id : ""}?role=${user?.role === "admin" ? "admin" : ""}`}
+                    >
+                      {items.name}
+                    </Link>
                   </li>
                 ))
               : navItemsForStudent.map((items) => (
                   <li
                     key={items.id}
                     className={
-                      `${pathname === items.href.split("/")[1].split("?")[0] ? "active" : ""}` +
+                      `${pathname === items.href.split("/")[1] ? "active" : ""}` +
                       " " +
                       liClassName
                     }
                   >
-                    <Link href={`${items.href}`}>{items.name}</Link>
+                    <Link
+                      href={`${items.href}/${items.name === "Account" ? user?.id : ""}?role=${user?.role === "student" ? "student" : ""}`}
+                    >
+                      {items.name}
+                    </Link>
                   </li>
                 ))}
           </ul>
@@ -157,7 +169,7 @@ const Navbar: React.FC = (): JSX.Element => {
           <div
             className={`absolute top-0 left-0 w-full min-h-full bg-black/20 transition-transform duration-500 ease-out ${isOpen ? "translate-y-0" : "-translate-y-full"}`}
           >
-            <MobileMenu role={user?.role as string} pathname={pathname} />
+            <MobileMenu user={user} pathname={pathname} />
           </div>
         </div>
       )}

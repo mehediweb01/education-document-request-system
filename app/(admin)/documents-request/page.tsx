@@ -1,6 +1,11 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Documents Request",
+  description: "This is the documents request page for administrators",
+};
+
 const DocumentsRequest = async () => {
   const cookie = await cookies();
   const token = cookie.get("token")?.value;
