@@ -1,16 +1,74 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { UserProps } from "@/interface/interface";
+import { RequestProps, UserProps } from "@/interface/interface";
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // handle the form submission logic here
-    alert(`Form submitted for user ID: ${user?.id}`);
+  const [inputValue, setInputValue] = useState<RequestProps>({
+    firstName: "",
+    lastName: "",
+    studentNumber: "880",
+    year: "",
+    session: "",
+    course: "",
+    email: user?.email || "",
+    documentType: [],
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
+
+    if (name === "documentType") {
+      setInputValue((prev) => ({
+        ...prev,
+        documentType: checked
+          ? [...prev.documentType, value]
+          : prev.documentType.filter((item) => item !== value),
+      }));
+    } else if (name === "studentNumber") {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value.replace(/\D/g, ""),
+      }));
+    } else if (name === "session") {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value.replace(/[^0-9-]/g, ""),
+      }));
+    } else {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
-  console.log(user);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      if (inputValue.documentType.length === 0) {
+        toast.warning("Please select at least one document type");
+      } else {
+        const newRequest = {
+          ...inputValue,
+          studentNumber: Number(inputValue.studentNumber),
+          year: Number(inputValue.year),
+        };
+
+        console.log({ newRequest });
+      }
+    } catch (err: unknown) {
+      if (err instanceof axios.AxiosError) {
+        toast.error(err.response?.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
 
   return (
     <form
@@ -24,35 +82,42 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
       {/*  input filed : student information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
-          <label htmlFor="first-name">First Name:</label>
+          <label htmlFor="firstName">First Name:</label>
           <input
-            name="first-name"
             type="text"
-            id="first-name"
+            name="firstName"
+            id="firstName"
             placeholder="John"
             className="input"
+            onChange={handleChange}
+            value={inputValue?.firstName}
             required
           />
         </div>
         <div>
-          <label htmlFor="last-name">Last Name:</label>
+          <label htmlFor="lastName">Last Name:</label>
           <input
-            name="last-name"
+            name="lastName"
             type="text"
-            id="last-name"
+            id="lastName"
             placeholder="Doe"
             className="input"
+            onChange={handleChange}
+            value={inputValue?.lastName}
             required
           />
         </div>
         <div>
-          <label htmlFor="student-number">Student Number:</label>
+          <label htmlFor="studentNumber">Student Number:</label>
           <input
-            type="text"
-            name="student-number"
-            id="student-number"
+            type="tel"
+            inputMode="numeric"
+            name="studentNumber"
+            id="studentNumber"
             className="input"
             placeholder="+880 xxxxxxxxxx"
+            onChange={handleChange}
+            value={inputValue?.studentNumber}
             required
           />
         </div>
@@ -63,27 +128,33 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             disabled
             className="input disabled:text-gray-400 disabled:cursor-not-allowed"
             value={user?.email}
+            name="email"
+            id="email"
           />
         </div>
         <div>
           <label htmlFor="year">Year: </label>
           <input
-            type="text"
+            type="number"
             id="year"
             name="year"
             placeholder="2000"
             className="input"
+            onChange={handleChange}
+            value={inputValue?.year}
             required
           />
         </div>
         <div>
           <label htmlFor="session">Session: </label>
           <input
-            type="text"
+            type="string"
             id="session"
             name="session"
             className="input"
             placeholder="2024-2025"
+            onChange={handleChange}
+            value={inputValue?.session}
             required
           />
         </div>
@@ -95,6 +166,8 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             name="course"
             className="input"
             placeholder="Computer Science"
+            onChange={handleChange}
+            value={inputValue?.course}
             required
           />
         </div>
@@ -108,9 +181,10 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
         <div>
           <input
             type="checkbox"
-            name="document"
+            name="documentType"
             className="mr-2"
             value="Semester Result Sheet"
+            onChange={handleChange}
             id="semester-result"
           />
           <label htmlFor="semester-result">Semester Result Sheet </label>
@@ -118,9 +192,10 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
         <div>
           <input
             type="checkbox"
-            name="document"
+            name="documentType"
             className="mr-2"
             value="Testimonials"
+            onChange={handleChange}
             id="Testimonials"
           />
           <label htmlFor="Testimonials">Testimonials</label>
@@ -128,9 +203,10 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
         <div>
           <input
             type="checkbox"
-            name="document"
+            name="documentType"
             className="mr-2"
             value="CGPA Certificate"
+            onChange={handleChange}
             id="cgpa-certificate"
           />
           <label htmlFor="cgpa-certificate">CGPA Certificate</label>
@@ -138,9 +214,10 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
         <div>
           <input
             type="checkbox"
-            name="document"
+            name="documentType"
             className="mr-2"
             value="Course Completion Certificate"
+            onChange={handleChange}
             id="course-completion-certificate"
           />
           <label htmlFor="course-completion-certificate">

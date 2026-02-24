@@ -8,3 +8,14 @@ export interface UserProps {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface RequestProps {
+  firstName: string;
+  lastName: string;
+  studentNumber: string;
+  year: string;
+  session: string;
+  course: string;
+  email: string;
+  documentType: string[];
+}
