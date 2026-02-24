@@ -20,6 +20,10 @@ const RegisterForm = () => {
     confirmPassword: "",
     gender: "",
     role: "student",
+    reg: 0,
+    department: "",
+    session: "",
+    contactNumber: +880,
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -27,10 +31,17 @@ const RegisterForm = () => {
   const handleInputChange = (e: ChangeEvent) => {
     const { name, value } = e.target;
 
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
+    if (name === "session") {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value.replace(/[^0-9-]/g, ""),
+      }));
+    } else {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,12 +49,17 @@ const RegisterForm = () => {
 
     try {
       setLoading(true);
+
       const payload = {
         name: inputValue.name?.trim(),
         email: inputValue.email?.trim(),
         password: inputValue.password?.trim(),
         confirmPassword: inputValue.confirmPassword?.trim(),
         gender: inputValue.gender?.trim(),
+        reg: Number(inputValue.reg),
+        department: inputValue.department?.trim(),
+        session: inputValue.session?.trim(),
+        contactNumber: Number(inputValue.contactNumber),
         role: "student",
       };
 
@@ -70,6 +86,10 @@ const RegisterForm = () => {
         confirmPassword: "",
         gender: "",
         role: "student",
+        reg: 0,
+        department: "",
+        session: "",
+        contactNumber: +880,
       });
     } catch (err: unknown) {
       setLoading(false);
@@ -120,6 +140,66 @@ const RegisterForm = () => {
             value={inputValue.email}
             required
           />
+        </div>
+
+        {/* reg number & department */}
+        <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-2">
+          <div>
+            <label htmlFor="reg">Reg. Number:</label>
+            <input
+              type="number"
+              id="reg"
+              className="input"
+              name="reg"
+              placeholder="1248756554"
+              onChange={handleInputChange}
+              value={inputValue.reg}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="department">Department:</label>
+            <input
+              type="text"
+              id="department"
+              className="input"
+              name="department"
+              placeholder="Computer Science"
+              onChange={handleInputChange}
+              value={inputValue.department}
+              required
+            />
+          </div>
+        </div>
+
+        {/* session & contact number */}
+        <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-2">
+          <div>
+            <label htmlFor="contactNumber">Contact number:</label>
+            <input
+              type="number"
+              id="contactNumber"
+              className="input"
+              name="contactNumber"
+              placeholder="+8801777777777"
+              onChange={handleInputChange}
+              value={inputValue.contactNumber}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="session">Session:</label>
+            <input
+              type="text"
+              id="session"
+              className="input"
+              name="session"
+              placeholder="2024-2025"
+              onChange={handleInputChange}
+              value={inputValue.session}
+              required
+            />
+          </div>
         </div>
 
         {/* password */}

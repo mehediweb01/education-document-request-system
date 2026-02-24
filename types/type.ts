@@ -17,8 +17,12 @@ export type InputState = {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  reg: number;
+  department: string;
   gender?: string;
   role?: string;
+  session?: string;
+  contactNumber?: number;
 };
 
 export type ChangeEvent = React.ChangeEvent<

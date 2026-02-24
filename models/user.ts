@@ -10,6 +10,24 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    reg: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    department: {
+      type: String,
+      required: true,
+    },
+    contactNumber: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    session: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,

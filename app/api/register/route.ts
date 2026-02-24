@@ -4,13 +4,34 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
-  const { name, email, password, gender, role, confirmPassword } =
-    await req.json();
+  const {
+    name,
+    email,
+    password,
+    gender,
+    role,
+    confirmPassword,
+    reg,
+    department,
+    session,
+    contactNumber,
+  } = await req.json();
 
   try {
     await connectDB();
 
-    if (!name || !email || !password || !gender || !role || !confirmPassword) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !gender ||
+      !role ||
+      !confirmPassword ||
+      !reg ||
+      !department ||
+      !session ||
+      !contactNumber
+    ) {
       return NextResponse.json(
         {
           message: `All fields are required`,
@@ -25,6 +46,44 @@ export const POST = async (req: Request) => {
       return NextResponse.json(
         {
           message: "Password must be at least 6 characters long 🙅‍♂️",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const stringReg = String(reg).trim();
+
+    if (stringReg.length !== 10) {
+      return NextResponse.json(
+        {
+          message: "Registration number must be 10 characters long",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const StringContact = String(contactNumber).trim();
+
+    if (StringContact.length !== 13) {
+      return NextResponse.json(
+        {
+          message: "Contact number must be 13 characters long",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    // start with contact number 880
+    if (!StringContact.startsWith("880")) {
+      return NextResponse.json(
+        {
+          message: "Contact number must be start with 880",
         },
         {
           status: 400,
@@ -59,6 +118,10 @@ export const POST = async (req: Request) => {
       password: hashedPassword,
       gender,
       role,
+      reg,
+      department,
+      session,
+      contactNumber,
     };
 
     await User.create(newUser);
