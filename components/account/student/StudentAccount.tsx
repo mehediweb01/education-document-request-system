@@ -3,6 +3,7 @@ import { UserProps } from "@/interface/interface";
 import { dateConvert } from "@/lib/DateConvert";
 import Image from "next/image";
 import EditProfile from "./EditProfile";
+import ProfileInformationCard from "./ProfileInformationCard";
 
 const StudentAccount = ({ user }: { user: UserProps | null }) => {
   const createdDate = dateConvert(user?.createdAt as string);
@@ -40,83 +41,60 @@ const StudentAccount = ({ user }: { user: UserProps | null }) => {
           </div>
           {/* profile information */}
           <div className="md:mt-8 lg:mt-12 w-full space-y-2">
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Full Name:
-              </h3>
-              <input
-                type="text"
-                value={user?.name}
-                disabled
-                className="input w-1/2"
+            <ProfileInformationCard
+              label="Full Name"
+              value={user?.name as string}
+            />
+
+            <ProfileInformationCard
+              label="Email"
+              value={user?.email as string}
+            />
+
+            <ProfileInformationCard
+              label="Contact Number"
+              value={`+${user?.contactNumber}` as string}
+            />
+
+            <ProfileInformationCard
+              label="Registration Number"
+              value={user?.reg as number}
+            />
+
+            <ProfileInformationCard
+              label="Session"
+              value={user?.session as string}
+            />
+
+            <ProfileInformationCard
+              label="Department"
+              value={user?.department as string}
+            />
+
+            <ProfileInformationCard
+              label="Gender"
+              value={user?.gender as string}
+            />
+
+            <ProfileInformationCard label="Role" value={user?.role as string} />
+
+            {user?.address && (
+              <ProfileInformationCard
+                label="Address"
+                value={user?.address as string}
               />
-            </div>
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Email:
-              </h3>
-              <input
-                type="text"
-                value={user?.email}
-                disabled
-                className="input w-1/2"
-              />
-            </div>
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Gender:
-              </h3>
-              <input
-                type="text"
-                value={user?.gender}
-                disabled
-                className="input w-1/2"
-              />
-            </div>
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Role:
-              </h3>
-              <input
-                type="text"
-                value={user?.role}
-                disabled
-                className="input w-1/2"
-              />
-            </div>
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Address:
-              </h3>
-              <input
-                type="text"
-                value={user?.address}
-                disabled
-                className="input w-1/2"
-              />
-            </div>
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Account created:
-              </h3>
-              <input
-                type="text"
-                value={createdDate}
-                disabled
-                className="input w-1/2"
-              />
-            </div>
-            <div className="flex justify-between items-center gap-3 w-full">
-              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
-                Account updated:
-              </h3>
-              <input
-                type="text"
-                value={updatedDate}
-                disabled
-                className="input w-1/2"
-              />
-            </div>
+            )}
+
+            <ProfileInformationCard
+              label="Account created"
+              value={createdDate}
+            />
+
+            <ProfileInformationCard
+              label="Account updated"
+              value={updatedDate}
+              className="border-b-0"
+            />
           </div>
         </div>
 
