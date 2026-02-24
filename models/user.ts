@@ -25,6 +25,10 @@ const UserSchema = new Schema(
       enum: ["admin", "student"],
       default: "student",
     },
+    address: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

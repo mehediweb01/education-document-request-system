@@ -1,11 +1,12 @@
 import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
-import { Button } from "@/components/ui/button";
 import { UserProps } from "@/interface/interface";
 import { dateConvert } from "@/lib/DateConvert";
 import Image from "next/image";
+import EditProfile from "./EditProfile";
 
 const StudentAccount = ({ user }: { user: UserProps | null }) => {
-  const date = dateConvert(user?.createdAt as string);
+  const createdDate = dateConvert(user?.createdAt as string);
+  const updatedDate = dateConvert(user?.updatedAt as string);
 
   return (
     <>
@@ -33,9 +34,8 @@ const StudentAccount = ({ user }: { user: UserProps | null }) => {
               <h1 className="font-semibold text-eerie-black font-inter capitalize text-xl text-center">
                 {user?.name}
               </h1>
-              <Button variant="outline" className="cursor-pointer">
-                Edit profile
-              </Button>
+
+              <EditProfile user={user} />
             </div>
           </div>
           {/* profile information */}
@@ -86,11 +86,33 @@ const StudentAccount = ({ user }: { user: UserProps | null }) => {
             </div>
             <div className="flex justify-between items-center gap-3 w-full">
               <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
+                Address:
+              </h3>
+              <input
+                type="text"
+                value={user?.address}
+                disabled
+                className="input w-1/2"
+              />
+            </div>
+            <div className="flex justify-between items-center gap-3 w-full">
+              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
                 Account created:
               </h3>
               <input
                 type="text"
-                value={date}
+                value={createdDate}
+                disabled
+                className="input w-1/2"
+              />
+            </div>
+            <div className="flex justify-between items-center gap-3 w-full">
+              <h3 className="font-semibold font-inter text-eerie-black text-base md:text-xl">
+                Account updated:
+              </h3>
+              <input
+                type="text"
+                value={updatedDate}
                 disabled
                 className="input w-1/2"
               />
