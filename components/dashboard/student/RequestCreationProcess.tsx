@@ -8,7 +8,7 @@ const RequestCreationProcess = ({
   return (
     <div
       className={cn(
-        `w-full sm:w-[40%] lg:w-[25%] bg-green h-full sm:min-h-screen p-8 space-y-4 rounded-lg sm:mt-0 mt-8`,
+        `w-full sm:w-[40%] lg:w-[25%] bg-green p-8 space-y-4 rounded-lg sm:mt-0 mt-8`,
         className,
       )}
     >
