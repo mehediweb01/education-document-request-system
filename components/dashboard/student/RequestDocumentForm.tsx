@@ -1,5 +1,6 @@
 "use client";
 
+import InputField from "@/components/common/InputField";
 import { Button } from "@/components/ui/button";
 import { RequestProps, UserProps } from "@/interface/interface";
 import axios from "axios";
@@ -8,14 +9,15 @@ import { toast } from "react-toastify";
 
 const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
   const [inputValue, setInputValue] = useState<RequestProps>({
-    firstName: "",
-    lastName: "",
-    studentNumber: "880",
+    name: user?.name || "",
+    studentNumber: String(user?.contactNumber) || "880",
     year: "",
-    session: "",
+    session: user?.session || "",
     course: "",
     email: user?.email || "",
     documentType: [],
+    department: user?.department || "",
+    reg: user?.reg || 0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,96 +83,87 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
 
       {/*  input filed : student information */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            placeholder="John"
-            className="input"
-            onChange={handleChange}
-            value={inputValue?.firstName}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            name="lastName"
-            type="text"
-            id="lastName"
-            placeholder="Doe"
-            className="input"
-            onChange={handleChange}
-            value={inputValue?.lastName}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="studentNumber">Student Number:</label>
-          <input
-            type="tel"
-            inputMode="numeric"
-            name="studentNumber"
-            id="studentNumber"
-            className="input"
-            placeholder="+880 xxxxxxxxxx"
-            onChange={handleChange}
-            value={inputValue?.studentNumber}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            disabled
-            className="input disabled:text-gray-400 disabled:cursor-not-allowed"
-            value={user?.email}
-            name="email"
-            id="email"
-          />
-        </div>
-        <div>
-          <label htmlFor="year">Year: </label>
-          <input
-            type="number"
-            id="year"
-            name="year"
-            placeholder="2000"
-            className="input"
-            onChange={handleChange}
-            value={inputValue?.year}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="session">Session: </label>
-          <input
-            type="string"
-            id="session"
-            name="session"
-            className="input"
-            placeholder="2024-2025"
-            onChange={handleChange}
-            value={inputValue?.session}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="course">Course: </label>
-          <input
-            type="text"
-            id="course"
-            name="course"
-            className="input"
-            placeholder="Computer Science"
-            onChange={handleChange}
-            value={inputValue?.course}
-            required
-          />
-        </div>
+        <InputField
+          type="text"
+          name="name"
+          placeholder="john Doe"
+          onChange={handleChange}
+          value={inputValue?.name}
+          label="Full Name"
+          disabled={true}
+        />
+
+        <InputField
+          type="tel"
+          name="studentNumber"
+          placeholder="+880 xxxxxxxxxx"
+          onChange={handleChange}
+          value={inputValue?.studentNumber}
+          label="Student Number"
+          disabled={true}
+        />
+
+        <InputField
+          type="email"
+          name="email"
+          placeholder="8hMlW@example.com"
+          onChange={handleChange}
+          value={inputValue?.email}
+          label="Email"
+          disabled={true}
+        />
+
+        <InputField
+          type="number"
+          name="reg"
+          placeholder="1234567891"
+          onChange={handleChange}
+          value={inputValue?.reg}
+          label="Registration Number"
+          disabled={true}
+        />
+
+        <InputField
+          type="text"
+          name="session"
+          placeholder="2024-2025"
+          onChange={handleChange}
+          value={inputValue?.session}
+          label="Session"
+          disabled={true}
+        />
+
+        <InputField
+          type="text"
+          name="department"
+          placeholder="Management"
+          onChange={handleChange}
+          value={inputValue?.department}
+          label="Department"
+          disabled={true}
+        />
+
+        <InputField
+          type="number"
+          name="year"
+          placeholder="2000"
+          onChange={handleChange}
+          value={inputValue?.year}
+          label="Year"
+          disabled={false}
+          required={true}
+        />
+
+        <InputField
+          type="text"
+          name="course"
+          placeholder="course name..."
+          onChange={handleChange}
+          value={inputValue?.course}
+          label="Course"
+          disabled={false}
+          required={true}
+        />
       </div>
 
       {/* input filed : document information */}

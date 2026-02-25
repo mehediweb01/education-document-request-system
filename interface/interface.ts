@@ -14,12 +14,13 @@ export interface UserProps {
 }
 
 export interface RequestProps {
-  firstName: string;
-  lastName: string;
+  name: string;
   studentNumber: string;
   year: string;
   session: string;
   course: string;
   email: string;
   documentType: string[];
+  department: string;
+  reg: number;
 }

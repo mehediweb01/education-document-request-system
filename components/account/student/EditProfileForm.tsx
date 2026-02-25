@@ -8,7 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
-import InputField from "./InputField";
+import InputField from "../../common/InputField";
 
 const EditProfileForm = ({
   setIsOpen,
@@ -74,7 +74,7 @@ const EditProfileForm = ({
           label="Name"
           type="text"
           value={userInfo?.name as string}
-          handleUserInfoChange={handleUserInfoChange}
+          onChange={handleUserInfoChange}
           placeholder="John Doe"
         />
 
@@ -83,7 +83,7 @@ const EditProfileForm = ({
           label="Address"
           type="text"
           value={userInfo?.address as string}
-          handleUserInfoChange={handleUserInfoChange}
+          onChange={handleUserInfoChange}
           placeholder="123 main st"
         />
 
@@ -92,7 +92,7 @@ const EditProfileForm = ({
           label="Department"
           type="text"
           value={userInfo?.department as string}
-          handleUserInfoChange={handleUserInfoChange}
+          onChange={handleUserInfoChange}
           placeholder="Computer Science"
         />
 
@@ -101,7 +101,7 @@ const EditProfileForm = ({
           label="Contact Number"
           type="number"
           value={userInfo?.contactNumber as number}
-          handleUserInfoChange={handleUserInfoChange}
+          onChange={handleUserInfoChange}
           placeholder="+8801234567890"
         />
 

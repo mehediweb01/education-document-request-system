@@ -36,10 +36,12 @@ export type MongoObject = {
 
 export type InputFieldType = {
   value: string | number;
-  handleUserInfoChange: (e: ChangeEvent) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: string;
   name: string;
   className?: string;
   label: string;
   placeholder?: string;
+  disabled?: boolean;
+  required?: boolean;
 };
