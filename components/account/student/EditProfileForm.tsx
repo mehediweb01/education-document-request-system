@@ -8,6 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
+import InputField from "./InputField";
 
 const EditProfileForm = ({
   setIsOpen,
@@ -68,30 +69,42 @@ const EditProfileForm = ({
   return (
     <>
       <div className="space-y-2">
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            className="input"
-            id="name"
-            name="name"
-            value={userInfo?.name}
-            onChange={handleUserInfoChange}
-            placeholder="John Doe"
-          />
-        </div>
-        <div>
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            className="input"
-            id="address"
-            name="address"
-            value={userInfo?.address || ""}
-            onChange={handleUserInfoChange}
-            placeholder="123 main st"
-          />
-        </div>
+        <InputField
+          name="name"
+          label="Name"
+          type="text"
+          value={userInfo?.name as string}
+          handleUserInfoChange={handleUserInfoChange}
+          placeholder="John Doe"
+        />
+
+        <InputField
+          name="address"
+          label="Address"
+          type="text"
+          value={userInfo?.address as string}
+          handleUserInfoChange={handleUserInfoChange}
+          placeholder="123 main st"
+        />
+
+        <InputField
+          name="department"
+          label="Department"
+          type="text"
+          value={userInfo?.department as string}
+          handleUserInfoChange={handleUserInfoChange}
+          placeholder="Computer Science"
+        />
+
+        <InputField
+          name="contactNumber"
+          label="Contact Number"
+          type="number"
+          value={userInfo?.contactNumber as number}
+          handleUserInfoChange={handleUserInfoChange}
+          placeholder="+8801234567890"
+        />
+
         <div>
           <label htmlFor="gender">Gender:</label>
           <select

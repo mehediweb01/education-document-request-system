@@ -9,7 +9,7 @@ export const PATCH = async (
   const body = await req.json();
   const searchParams = await params;
   const id = searchParams.id;
-  const { name, address, gender } = body;
+  const { name, address, gender, contactNumber, department } = body;
 
   try {
     await connectDB();
@@ -22,32 +22,69 @@ export const PATCH = async (
       });
     }
 
+    const number = Number(contactNumber);
+
+    if (!number.toString().startsWith("880")) {
+      return NextResponse.json(
+        {
+          message: "Invalid contact number! Contact number must start with 880",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    if (number.toString().length !== 13) {
+      return NextResponse.json(
+        {
+          message:
+            "Invalid contact number! Contact number must be 13 digits long",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
     const updatedUser = await User.findOneAndUpdate(
       {
         _id: id,
         $or: [
           {
             name: {
-              $ne: name,
+              $ne: name.trim(),
             },
           },
           {
             address: {
-              $ne: address,
+              $ne: address.trim(),
             },
           },
           {
             gender: {
-              $ne: gender,
+              $ne: gender.trim(),
+            },
+          },
+          {
+            department: {
+              $ne: department.trim(),
+            },
+          },
+          {
+            contactNumber: {
+              $ne: number,
             },
           },
         ],
       },
       {
         $set: {
-          name: name,
-          address: address,
-          gender: gender,
+          name: name.trim(),
+          address: address.trim(),
+          gender: gender.trim(),
+          contactNumber: number,
+          department: department.trim(),
         },
       },
       {

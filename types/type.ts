@@ -33,3 +33,13 @@ export type MongoObject = {
   _id: ObjectId | string;
   [key: string]: unknown;
 };
+
+export type InputFieldType = {
+  value: string | number;
+  handleUserInfoChange: (e: ChangeEvent) => void;
+  type: string;
+  name: string;
+  className?: string;
+  label: string;
+  placeholder?: string;
+};
