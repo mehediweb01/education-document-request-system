@@ -94,22 +94,22 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
         />
 
         <InputField
-          type="tel"
-          name="studentNumber"
-          placeholder="+880 xxxxxxxxxx"
-          onChange={handleChange}
-          value={inputValue?.studentNumber}
-          label="Student Number"
-          disabled={true}
-        />
-
-        <InputField
           type="email"
           name="email"
           placeholder="8hMlW@example.com"
           onChange={handleChange}
           value={inputValue?.email}
           label="Email"
+          disabled={true}
+        />
+
+        <InputField
+          type="tel"
+          name="studentNumber"
+          placeholder="+880 xxxxxxxxxx"
+          onChange={handleChange}
+          value={inputValue?.studentNumber}
+          label="Student Number"
           disabled={true}
         />
 

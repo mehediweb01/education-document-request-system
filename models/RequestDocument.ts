@@ -2,11 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const RequestDocumentSchema = new Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
+    name: {
       type: String,
       required: true,
     },
@@ -16,6 +12,15 @@ const RequestDocumentSchema = new Schema(
     },
     studentNumber: {
       type: Number,
+      required: true,
+    },
+    reg: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    department: {
+      type: String,
       required: true,
     },
     year: {
