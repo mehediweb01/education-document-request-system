@@ -18,7 +18,10 @@ export const GET = async () => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      role: string;
+      user_id: string;
+    };
 
     const user = await User.findOne({ _id: decoded.user_id }).select([
       "-password",

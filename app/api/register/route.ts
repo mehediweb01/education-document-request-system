@@ -112,6 +112,19 @@ export const POST = async (req: Request) => {
       );
     }
 
+    const existingReg = await User.findOne({ reg });
+
+    if (existingReg) {
+      return NextResponse.json(
+        {
+          message: "Registration number already exists!",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
     const newUser = {
       name,
       email,
@@ -140,13 +153,23 @@ export const POST = async (req: Request) => {
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return NextResponse.json(error.message, {
-        status: 500,
-      });
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: 500,
+        },
+      );
     } else {
-      return NextResponse.json("Something went wrong", {
-        status: 500,
-      });
+      return NextResponse.json(
+        {
+          message: "Something went wrong",
+        },
+        {
+          status: 500,
+        },
+      );
     }
   }
 };
