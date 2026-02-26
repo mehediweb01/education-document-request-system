@@ -47,6 +47,14 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
+    requests: [
+      {
+        requestId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "RequestDocument",
+        },
+      },
+    ],
   },
   {
     timestamps: true,

@@ -17,7 +17,6 @@ const RequestDocumentSchema = new Schema(
     reg: {
       type: Number,
       required: true,
-      unique: true,
     },
     department: {
       type: String,

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
   const [inputValue, setInputValue] = useState<RequestProps>({
     name: user?.name || "",
-    studentNumber: String(user?.contactNumber) || "880",
+    studentNumber: `+${String(user?.contactNumber)}` || "+880",
     year: "",
     session: user?.session || "",
     course: "",
@@ -19,6 +19,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
     department: user?.department || "",
     reg: user?.reg || 0,
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
@@ -52,18 +53,49 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       if (inputValue.documentType.length === 0) {
+        setLoading(false);
         toast.warning("Please select at least one document type");
       } else {
+        setLoading(true);
+
         const newRequest = {
           ...inputValue,
           studentNumber: Number(inputValue.studentNumber),
           year: Number(inputValue.year),
+          reg: Number(inputValue.reg),
         };
 
-        console.log({ newRequest });
+        const response = await axios.post(
+          "/api/user/request-document",
+          newRequest,
+        );
+
+        if (response.status !== 201) {
+          setLoading(false);
+          toast.error(response.data.message);
+        }
+
+        if (response.status === 201) {
+          setLoading(false);
+          toast.success(response.data.message);
+          setInputValue({
+            name: user?.name || "",
+            studentNumber: `+${String(user?.contactNumber)}` || "+880",
+            year: "",
+            session: user?.session || "",
+            course: "",
+            email: user?.email || "",
+            documentType: [],
+            department: user?.department || "",
+            reg: user?.reg || 0,
+          });
+        }
       }
     } catch (err: unknown) {
+      setLoading(false);
       if (err instanceof axios.AxiosError) {
         toast.error(err.response?.data.message);
       } else {
@@ -178,6 +210,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             className="mr-2"
             value="Semester Result Sheet"
             onChange={handleChange}
+            checked={inputValue.documentType.includes("Semester Result Sheet")}
             id="semester-result"
           />
           <label htmlFor="semester-result">Semester Result Sheet </label>
@@ -189,6 +222,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             className="mr-2"
             value="Testimonials"
             onChange={handleChange}
+            checked={inputValue.documentType.includes("Testimonials")}
             id="Testimonials"
           />
           <label htmlFor="Testimonials">Testimonials</label>
@@ -200,6 +234,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             className="mr-2"
             value="CGPA Certificate"
             onChange={handleChange}
+            checked={inputValue.documentType.includes("CGPA Certificate")}
             id="cgpa-certificate"
           />
           <label htmlFor="cgpa-certificate">CGPA Certificate</label>
@@ -211,6 +246,9 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             className="mr-2"
             value="Course Completion Certificate"
             onChange={handleChange}
+            checked={inputValue.documentType.includes(
+              "Course Completion Certificate",
+            )}
             id="course-completion-certificate"
           />
           <label htmlFor="course-completion-certificate">
@@ -225,9 +263,10 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           type="submit"
           variant="outline"
           size="lg"
-          className="cursor-pointer bg-green text-white border-sky-400 font-inter hover:bg-green/90 hover:text-white hover:border-sky-600 text-base md:text-xl tracking-[1px] transition-colors duration-300"
+          className="cursor-pointer bg-green text-white border-sky-400 font-inter hover:bg-green/90 hover:text-white hover:border-sky-600 text-base md:text-xl tracking-[1px] transition-colors duration-300 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-500 disabled:border-gray-400"
+          disabled={loading}
         >
-          Submit
+          Submit {loading && "..."}
         </Button>
       </div>
     </form>
