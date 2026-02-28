@@ -14,6 +14,7 @@ export interface UserProps {
 }
 
 export interface RequestProps {
+  id?: string;
   name: string;
   studentNumber: string;
   year: string;
@@ -23,4 +24,5 @@ export interface RequestProps {
   documentType: string[];
   department: string;
   reg: number;
+  createdAt?: string | Date;
 }

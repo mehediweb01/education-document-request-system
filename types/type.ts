@@ -36,7 +36,7 @@ export type MongoObject = {
 
 export type InputFieldType = {
   value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: string;
   name: string;
   className?: string;
