@@ -4,6 +4,7 @@ import InputField from "@/components/common/InputField";
 import { Button } from "@/components/ui/button";
 import { RequestProps, UserProps } from "@/interface/interface";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -20,6 +21,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
     reg: user?.reg || 0,
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
@@ -92,6 +94,9 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             department: user?.department || "",
             reg: user?.reg || 0,
           });
+          router.push(
+            `/dashboard/student/request-document/${user?.id}/${response.data.request._id}`,
+          );
         }
       }
     } catch (err: unknown) {

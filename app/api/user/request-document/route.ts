@@ -135,7 +135,7 @@ export const POST = async (req: Request) => {
     return NextResponse.json(
       {
         message: "Document request created successfully",
-        data: request,
+        request: request,
       },
       {
         status: 201,
