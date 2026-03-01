@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { RequestProps } from "@/interface/interface";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const DownloadReport = ({
   id,
@@ -15,10 +17,47 @@ const DownloadReport = ({
   department,
   reg,
 }: RequestProps) => {
-  const reportDownload = () => {
-    // generate pdf
-    // download pdf
-    alert("pdf downloaded");
+  const reportDownload = async () => {
+    try {
+      const res = await axios.post(
+        "/api/generate-pdf",
+        {
+          name,
+          email,
+          studentNumber,
+          session,
+          reg,
+          documentType,
+          course,
+          department,
+          year,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          responseType: "blob",
+        },
+      );
+
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${name}-document-report-${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+        console.error(err);
+      } else {
+        toast.error("Something went wrong");
+        console.error(err);
+      }
+    }
   };
 
   return (
