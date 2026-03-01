@@ -18,33 +18,31 @@ const DownloadReport = ({
   reg,
 }: RequestProps) => {
   const reportDownload = async () => {
+    const data = {
+      name,
+      email,
+      studentNumber,
+      session,
+      reg,
+      documentType,
+      course,
+      department,
+      year,
+    };
+
     try {
-      const res = await axios.post(
-        "/api/generate-pdf",
-        {
-          name,
-          email,
-          studentNumber,
-          session,
-          reg,
-          documentType,
-          course,
-          department,
-          year,
+      const res = await axios.post("/api/generate-pdf", data, {
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          responseType: "blob",
-        },
-      );
+        responseType: "blob",
+      });
 
       const url = window.URL.createObjectURL(new Blob([res.data]));
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${name}-document-report-${id}.pdf`;
+      a.download = `document-report-${id}${Math.floor(Math.random() * 10)}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
