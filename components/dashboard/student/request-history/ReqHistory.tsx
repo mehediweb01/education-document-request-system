@@ -38,7 +38,11 @@ const ReqHistory = async ({ userId }: { userId: string }) => {
           </TableHeader>
           <TableBody>
             {request.map((item) => (
-              <HistoryCard key={item.id} doc={item as RequestProps} />
+              <HistoryCard
+                key={item.id}
+                doc={item as RequestProps}
+                userId={userId}
+              />
             ))}
           </TableBody>
         </Table>

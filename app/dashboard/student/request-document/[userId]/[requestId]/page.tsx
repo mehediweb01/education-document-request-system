@@ -50,13 +50,13 @@ const RequestReportPage = async ({
       <div className="w-full sm:w-[60%] lg:w-[75%] mt-8 md:mt-12 mx-0 md:mx-12">
         <RequestReport report={requestData as unknown as RequestProps} />
         <div className="my-4 flex justify-end items-center gap-4 flex-wrap">
-          <Link href={`/`}>
+          <Link href={`/request-history`}>
             <Button
               type="button"
               variant="outline"
               className="cursor-pointer bg-green text-white px-4 py-5 text-base md:text-xl"
             >
-              Back to Home
+              Back to Request History
             </Button>
           </Link>
 

@@ -1,8 +1,16 @@
+import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { RequestProps, Status } from "@/interface/interface";
 import { dateConvert } from "@/lib/DateConvert";
+import Link from "next/link";
 
-const HistoryCard = ({ doc }: { doc: RequestProps }) => {
+const HistoryCard = ({
+  doc,
+  userId,
+}: {
+  doc: RequestProps;
+  userId: string;
+}) => {
   return (
     <>
       <TableRow className="border-b border-black">
@@ -24,6 +32,15 @@ const HistoryCard = ({ doc }: { doc: RequestProps }) => {
               {item}
             </p>
           ))}
+        </TableCell>
+        <TableCell>
+          <Button type="button" variant={"outline"}>
+            <Link
+              href={`/dashboard/student/request-document/${userId}/${doc.id}`}
+            >
+              View
+            </Link>
+          </Button>
         </TableCell>
       </TableRow>
     </>
