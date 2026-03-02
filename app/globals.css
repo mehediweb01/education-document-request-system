@@ -147,4 +147,12 @@
   .active {
     @apply text-blue-600 underline underline-offset-4 decoration-1;
   }
+
+  .tableHeader {
+    @apply bg-gray-200/40 text-gray-600 font-bold font-inter tracking-tight text-base md:text-xl;
+  }
+
+  .tableCell {
+    @apply text-eerie-black font-semibold font-inter tracking-tight text-base text-center;
+  }
 }

@@ -1,3 +1,4 @@
+import { Status } from "@/interface/interface";
 import mongoose, { Schema } from "mongoose";
 
 const RequestDocumentSchema = new Schema(
@@ -40,6 +41,12 @@ const RequestDocumentSchema = new Schema(
         required: true,
       },
     ],
+    status: {
+      type: String,
+      enum: Object.values(Status),
+      default: Status.Pending,
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -13,6 +13,12 @@ export interface UserProps {
   updatedAt?: string;
 }
 
+export enum Status {
+  Pending = "pending",
+  Rejected = "rejected",
+  Approved = "approved",
+}
+
 export interface RequestProps {
   id?: string;
   name: string;
@@ -25,4 +31,5 @@ export interface RequestProps {
   department: string;
   reg: number;
   createdAt?: string | Date;
+  status: Status;
 }
