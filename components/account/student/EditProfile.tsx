@@ -14,7 +14,7 @@ import { Edit } from "lucide-react";
 import { useState } from "react";
 import EditProfileForm from "./EditProfileForm";
 
-const EditProfile = ({ user }: { user: UserProps | null }) => {
+const EditProfile = ({ user }: { user: UserProps }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (

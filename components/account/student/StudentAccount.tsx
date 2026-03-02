@@ -36,7 +36,7 @@ const StudentAccount = ({ user }: { user: UserProps | null }) => {
                 {user?.name}
               </h1>
 
-              <EditProfile user={user} />
+              <EditProfile user={user as UserProps} />
             </div>
           </div>
           {/* profile information */}

@@ -25,6 +25,7 @@ export const GET = async () => {
 
     const user = await User.findOne({ _id: decoded.user_id }).select([
       "-password",
+      "-requests",
     ]);
 
     return NextResponse.json(

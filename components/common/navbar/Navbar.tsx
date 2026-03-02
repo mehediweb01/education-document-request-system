@@ -42,8 +42,6 @@ const Navbar: React.FC = (): JSX.Element => {
     checkAuthorization();
   }, [router, pathname]);
 
-  console.log({ user });
-
   const handleLogout = async () => {
     try {
       await axios.post("/api/logout");
