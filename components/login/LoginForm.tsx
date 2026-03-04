@@ -1,11 +1,12 @@
 "use client";
 
-import { ChangeEvent, InputState } from "@/types/type";
+import { ChangeEvent, LoginState } from "@/types/type";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
+import InputField from "../common/InputField";
 import { Button } from "../ui/button";
 
 const LoginForm = () => {
@@ -13,10 +14,13 @@ const LoginForm = () => {
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>,
   ] = useState(false);
-  const [inputValue, setInputValue] = useState<InputState>({
+
+  const [inputValue, setInputValue] = useState<LoginState>({
     email: "",
     password: "",
+    isAdmin: false,
   });
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -28,6 +32,13 @@ const LoginForm = () => {
       ...inputValue,
       [name]: value,
     });
+
+    if (name === "isAdmin") {
+      setInputValue({
+        ...inputValue,
+        [name]: !inputValue.isAdmin,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +49,7 @@ const LoginForm = () => {
       const payload = {
         email: inputValue.email?.trim(),
         password: inputValue.password?.trim(),
+        isAdmin: inputValue.isAdmin,
       };
 
       const response = await axios.post("/api/login", payload);
@@ -45,7 +57,7 @@ const LoginForm = () => {
       const data = response.data;
 
       if (data) {
-        toast.success("User logged in successful");
+        toast.success(data.message);
         if (data.user.role === "admin") {
           router.push(`/dashboard/admin`);
         } else if (data.user.role === "student") {
@@ -60,6 +72,7 @@ const LoginForm = () => {
       setInputValue({
         email: "",
         password: "",
+        isAdmin: false,
       });
     } catch (err: unknown) {
       setLoading(false);
@@ -83,35 +96,33 @@ const LoginForm = () => {
       </div>
       <div className="space-y-3">
         {/* email */}
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            className="input"
-            placeholder="demo@gmail.com"
-            value={inputValue.email}
-            onChange={handleInputChange}
-            name="email"
-            required
-          />
-        </div>
+        <InputField
+          type="email"
+          name="email"
+          className="input"
+          placeholder="demo@gmail.com"
+          value={inputValue.email}
+          onChange={handleInputChange}
+          label="Email"
+          required
+        />
 
         {/* password */}
         <div className="w-full">
-          <label htmlFor="password">Password:</label>
-          <div className="flex justify-center items-center gap-2 w-full">
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              className="input relative pe-8"
-              placeholder="*******"
-              value={inputValue.password}
-              onChange={handleInputChange}
-              name="password"
-              required
-            />
-            <div className="absolute right-14">
+          <div className="relative flex items-end justify-start gap-2">
+            <div className="w-full">
+              <InputField
+                type={showPassword ? "text" : "password"}
+                className="input relative pe-8"
+                placeholder="*******"
+                value={inputValue.password}
+                onChange={handleInputChange}
+                name="password"
+                label="Password"
+                required
+              />
+            </div>
+            <div className="absolute right-0">
               {showPassword ? (
                 <Button
                   onClick={() => setShowPassword(false)}
@@ -134,6 +145,16 @@ const LoginForm = () => {
             </div>
           </div>
         </div>
+
+        {/* isAdmin */}
+        <InputField
+          type="checkbox"
+          name="isAdmin"
+          onChange={handleInputChange}
+          checked={inputValue.isAdmin}
+          className="cursor-pointer input"
+          label="Is Admin"
+        />
 
         {/* button */}
         <div className="flex justify-center items-center">

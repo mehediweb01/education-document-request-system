@@ -35,7 +35,7 @@ export type MongoObject = {
 };
 
 export type InputFieldType = {
-  value: string | number;
+  value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: string;
   name: string;
@@ -44,4 +44,11 @@ export type InputFieldType = {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
+  checked?: boolean;
+};
+
+export type LoginState = {
+  email: string;
+  password: string;
+  isAdmin: boolean;
 };

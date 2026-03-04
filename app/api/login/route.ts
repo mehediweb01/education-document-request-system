@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
-  const { email, password } = await req.json();
+  const { email, password, isAdmin } = await req.json();
 
   try {
     await connectDB();
@@ -25,7 +25,7 @@ export const POST = async (req: Request) => {
     const user = await User.findOne({ email });
 
     if (user) {
-      const pass = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
       if (password.length < 6) {
         return NextResponse.json(
@@ -38,10 +38,22 @@ export const POST = async (req: Request) => {
         );
       }
 
-      if (!pass) {
+      if (!isMatch) {
         return NextResponse.json(
           {
             message: "Authentication failed!",
+          },
+          {
+            status: 401,
+          },
+        );
+      }
+
+      // admin role check
+      if (!isAdmin && user.role === "admin") {
+        return NextResponse.json(
+          {
+            message: "Unauthorized access!",
           },
           {
             status: 401,
@@ -74,7 +86,7 @@ export const POST = async (req: Request) => {
 
       const response = NextResponse.json(
         {
-          message: "User logged in successful",
+          message: `${isAdmin ? "Admin" : "User"} logged In Successful`,
           user: {
             email: user.email,
             role: user.role,
