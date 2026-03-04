@@ -61,6 +61,18 @@ export const POST = async (req: Request) => {
         );
       }
 
+      // checking the user is student but checked the isAdmin
+      if (isAdmin && user.role === "student") {
+        return NextResponse.json(
+          {
+            message: "Unauthorized access!",
+          },
+          {
+            status: 401,
+          },
+        );
+      }
+
       // jwt
       const accessToken = await jwt.sign(
         {
