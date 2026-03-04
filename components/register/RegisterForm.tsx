@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
+import InputField from "../common/InputField";
 import { Button } from "../ui/button";
 
 const RegisterForm = () => {
@@ -113,42 +114,35 @@ const RegisterForm = () => {
       </div>
       <div className="space-y-3">
         {/* name */}
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            className="input"
-            placeholder="John Doe"
-            name="name"
-            onChange={handleInputChange}
-            value={inputValue.name}
-            required
-          />
-        </div>
+        <InputField
+          type="text"
+          className="input"
+          placeholder="John Doe"
+          name="name"
+          onChange={handleInputChange}
+          value={inputValue.name}
+          label="Name"
+          required
+        />
 
         {/* email */}
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            className="input"
-            name="email"
-            placeholder="demo@gmail.com"
-            onChange={handleInputChange}
-            value={inputValue.email}
-            required
-          />
-        </div>
+        <InputField
+          type="email"
+          label="Email"
+          className="input"
+          name="email"
+          placeholder="demo@gmail.com"
+          onChange={handleInputChange}
+          value={inputValue.email}
+          required
+        />
 
         {/* reg number & department */}
         <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-2">
-          <div>
-            <label htmlFor="reg">Reg. Number:</label>
-            <input
+          <div className="w-full">
+            <InputField
               type="number"
-              id="reg"
+              label="Registration Number"
               className="input"
               name="reg"
               placeholder="1248756554"
@@ -157,11 +151,10 @@ const RegisterForm = () => {
               required
             />
           </div>
-          <div>
-            <label htmlFor="department">Department:</label>
-            <input
+          <div className="w-full">
+            <InputField
               type="text"
-              id="department"
+              label="Department"
               className="input"
               name="department"
               placeholder="Computer Science"
@@ -174,11 +167,10 @@ const RegisterForm = () => {
 
         {/* session & contact number */}
         <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-2">
-          <div>
-            <label htmlFor="contactNumber">Contact number:</label>
-            <input
+          <div className="w-full">
+            <InputField
               type="number"
-              id="contactNumber"
+              label="Contact Number"
               className="input"
               name="contactNumber"
               placeholder="+8801777777777"
@@ -187,11 +179,10 @@ const RegisterForm = () => {
               required
             />
           </div>
-          <div>
-            <label htmlFor="session">Session:</label>
-            <input
+          <div className="w-full">
+            <InputField
               type="text"
-              id="session"
+              label="Session"
               className="input"
               name="session"
               placeholder="2024-2025"
@@ -204,19 +195,20 @@ const RegisterForm = () => {
 
         {/* password */}
         <div className="w-full">
-          <label htmlFor="password">Password:</label>
-          <div className="flex justify-center items-center gap-2 w-full">
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              name="password"
-              className="input relative pe-8"
-              placeholder="*******"
-              onChange={handleInputChange}
-              value={inputValue.password}
-              required
-            />
-            <div className="absolute right-14">
+          <div className="relative flex items-end justify-start gap-2">
+            <div className="w-full">
+              <InputField
+                type={showPassword ? "text" : "password"}
+                label="Password"
+                name="password"
+                className="input relative pe-8"
+                placeholder="*******"
+                onChange={handleInputChange}
+                value={inputValue.password}
+                required
+              />
+            </div>
+            <div className="absolute right-0">
               {showPassword ? (
                 <Button
                   onClick={() => setShowPassword(false)}
@@ -241,19 +233,16 @@ const RegisterForm = () => {
         </div>
 
         {/* confirm password */}
-        <div>
-          <label htmlFor="confirm-password">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirm-password"
-            className={`input ${inputValue.password !== inputValue.confirmPassword ? "border-red-500" : ""}`}
-            placeholder="*******"
-            onChange={handleInputChange}
-            value={inputValue.confirmPassword}
-            name="confirmPassword"
-            required
-          />
-        </div>
+        <InputField
+          type="password"
+          label="Confirm Password"
+          className={`input ${inputValue.password !== inputValue.confirmPassword ? "border-red-500" : ""}`}
+          placeholder="*******"
+          onChange={handleInputChange}
+          value={inputValue.confirmPassword}
+          name="confirmPassword"
+          required
+        />
 
         {/* gender */}
         <div>
