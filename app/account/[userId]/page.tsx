@@ -1,5 +1,6 @@
 import AdminAccount from "@/components/account/admin/AdminAccount";
 import StudentAccount from "@/components/account/student/StudentAccount";
+import { UserProps } from "@/interface/interface";
 import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { getUserById } from "@/queries/users";
 import { notFound, redirect } from "next/navigation";
@@ -39,9 +40,9 @@ const UserAccount = async ({ params }: { params: { userId: string } }) => {
   const user = await getUserById(authUser?.user_id);
 
   if (authUser?.role === "admin") {
-    return <AdminAccount user={user} />;
+    return <AdminAccount user={user as UserProps} />;
   } else if (authUser?.role === "student") {
-    return <StudentAccount user={user} />;
+    return <StudentAccount user={user as UserProps} />;
   } else {
     redirect("/login");
   }
