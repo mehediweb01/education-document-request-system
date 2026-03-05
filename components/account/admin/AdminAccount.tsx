@@ -1,6 +1,7 @@
 import { UserProps } from "@/interface/interface";
 import Image from "next/image";
 import ProfileInformationCard from "../student/ProfileInformationCard";
+import Announcement from "./account/Announcement";
 
 const AdminAccount = ({ user }: { user: UserProps | null }) => {
   return (
@@ -68,7 +69,9 @@ const AdminAccount = ({ user }: { user: UserProps | null }) => {
           </div>
         </div>
 
-        <div>accouchement</div>
+        <div className="w-full sm:w-[40%] mx-auto">
+          <Announcement />
+        </div>
       </div>
     </>
   );

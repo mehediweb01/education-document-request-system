@@ -2,7 +2,7 @@
 
 import InputField from "@/components/common/InputField";
 import { Button } from "@/components/ui/button";
-import { RequestProps, UserProps } from "@/interface/interface";
+import { RequestProps, Status, UserProps } from "@/interface/interface";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,6 +19,8 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
     documentType: [],
     department: user?.department || "",
     reg: user?.reg || 0,
+    createdAt: "",
+    status: Status.Pending,
   });
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -93,6 +95,8 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             documentType: [],
             department: user?.department || "",
             reg: user?.reg || 0,
+            createdAt: "",
+            status: Status.Pending,
           });
           router.push(
             `/dashboard/student/request-document/${user?.id}/${response.data.request._id}`,
