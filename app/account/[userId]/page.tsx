@@ -1,65 +1,46 @@
 import AdminAccount from "@/components/account/admin/AdminAccount";
 import StudentAccount from "@/components/account/student/StudentAccount";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { getUserById } from "@/queries/users";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 // dynamically generate metadata based on user role
 export const generateMetadata = async () => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
+  const user = await getUserFromToken();
 
-  if (!token) {
-    return {
-      title: "Login",
-    };
-  }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-    role: string;
-    user_id: string;
-  };
-
-  if (decoded.role === "admin") {
+  if (user?.role === "admin") {
     return {
       title: "Admin Account",
     };
-  } else if (decoded.role === "student") {
+  } else if (user?.role === "student") {
     return {
       title: "Student Account",
     };
   } else {
     return {
-      title: "not found user account role",
+      title: "not found user",
     };
   }
 };
 
 const UserAccount = async ({ params }: { params: { userId: string } }) => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
+  const authUser = await getUserFromToken();
   const searchParams = await params;
   const user_id = searchParams.userId;
 
-  if (!token) {
+  if (!authUser) {
     redirect("/login");
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-    role: string;
-    user_id: string;
-  };
-
-  if (decoded.user_id !== user_id) {
-    redirect("/");
+  if (authUser?.user_id !== user_id) {
+    notFound();
   }
 
-  const user = await getUserById(user_id);
+  const user = await getUserById(authUser?.user_id);
 
-  if (decoded.role === "admin") {
+  if (authUser?.role === "admin") {
     return <AdminAccount user={user} />;
-  } else if (decoded.role === "student") {
+  } else if (authUser?.role === "student") {
     return <StudentAccount user={user} />;
   } else {
     redirect("/login");

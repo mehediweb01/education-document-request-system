@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Custom404 = () => {
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-[77vh] flex justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-4">
         <h1 className="font-inter sm:text-xl md:text-2xl lg:text-4xl font-bold capitalize flex flex-col justify-center items-center">
           <span className="text-4xl text-red-400 animate-bounce">404! 😒</span>

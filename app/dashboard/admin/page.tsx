@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
+import { notFound, redirect } from "next/navigation";
 
 export const metadata = {
   title: "Admin Dashboard",
@@ -7,10 +7,14 @@ export const metadata = {
 };
 
 const AdminPage = async () => {
-  const token = (await cookies()).get("token")?.value;
+  const authUser = await getUserFromToken();
 
-  if (!token) {
+  if (!authUser) {
     redirect("/login");
+  }
+
+  if (authUser?.role !== "admin") {
+    notFound();
   }
 
   return (

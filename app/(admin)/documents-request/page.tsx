@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
+import { notFound, redirect } from "next/navigation";
 
 export const metadata = {
   title: "Documents Request",
@@ -7,11 +7,14 @@ export const metadata = {
 };
 
 const DocumentsRequest = async () => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
+  const authUser = await getUserFromToken();
 
-  if (!token) {
+  if (!authUser) {
     redirect("/login");
+  }
+
+  if (authUser?.role !== "admin") {
+    notFound();
   }
 
   return (
