@@ -1,3 +1,5 @@
+import { Status } from "@/enum/enum";
+
 export interface UserProps {
   id?: string;
   name?: string;
@@ -13,11 +15,6 @@ export interface UserProps {
   updatedAt?: string;
 }
 
-export enum Status {
-  Pending = "pending",
-  Rejected = "rejected",
-  Approved = "approved",
-}
 
 export interface RequestProps {
   id?: string;

@@ -1,4 +1,4 @@
-import { Status } from "@/interface/interface";
+import { Status } from "@/enum/enum";
 import { RequestDocument } from "@/models/RequestDocument";
 import { User } from "@/models/user";
 import { connectDB } from "@/mongodb/connectDB";

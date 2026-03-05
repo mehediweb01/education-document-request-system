@@ -55,6 +55,14 @@ const UserSchema = new Schema(
         },
       },
     ],
+    announcement: [
+      {
+        announcementId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Announcement",
+        },
+      },
+    ],
   },
   {
     timestamps: true,

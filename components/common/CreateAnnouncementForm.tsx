@@ -17,7 +17,9 @@ const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
       e.preventDefault();
       setIsSubmitting(true);
 
-      const response = await axios.post("/api/announcement/create", text);
+      const response = await axios.post("/api/announcement/create", {
+        text,
+      });
 
       if (response.status !== 201) {
         toast.error(response.data.message);
@@ -42,6 +44,9 @@ const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <>
+      <label htmlFor="body">
+        Announcement: <span className="text-red-500">*</span>
+      </label>
       <textarea
         name="body"
         id="body"
@@ -52,6 +57,7 @@ const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
         value={text}
         onChange={handleChange}
         className="p-2 rounded-md focus:outline-none focus:shadow-inner focus:shadow-sky-400 hover:shadow-sm hover:shadow-sky-400/30 transition-all duration-300 ease-in-out border border-gray-400 focus:border-0 hover:border-sky-200"
+        required
       />
       <button
         type="submit"

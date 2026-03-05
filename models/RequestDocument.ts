@@ -1,4 +1,4 @@
-import { Status } from "@/interface/interface";
+import { Status } from "@/enum/enum";
 import mongoose, { Schema } from "mongoose";
 
 const RequestDocumentSchema = new Schema(

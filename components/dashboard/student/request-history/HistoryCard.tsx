@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { RequestProps, Status } from "@/interface/interface";
+import { Status } from "@/enum/enum";
+import { RequestProps } from "@/interface/interface";
 import { dateConvert } from "@/lib/DateConvert";
 import Link from "next/link";
 

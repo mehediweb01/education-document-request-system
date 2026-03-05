@@ -40,7 +40,7 @@ const CreateAnnouncement = () => {
             </DialogHeader>
 
             {/* create announcement form */}
-            <CreateAnnouncementForm onClose={() => setIsOpen(true)} />
+            <CreateAnnouncementForm onClose={() => setIsOpen(false)} />
           </DialogContent>
         </form>
       </Dialog>

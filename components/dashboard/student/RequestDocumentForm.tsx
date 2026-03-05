@@ -2,7 +2,8 @@
 
 import InputField from "@/components/common/InputField";
 import { Button } from "@/components/ui/button";
-import { RequestProps, Status, UserProps } from "@/interface/interface";
+import { RequestProps, UserProps } from "@/interface/interface";
+import {Status} from "@/enum/enum"
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
