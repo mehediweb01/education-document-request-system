@@ -24,7 +24,7 @@ const CreateAnnouncement = () => {
             <Button
               type="button"
               variant="outline"
-              className="cursor-pointer"
+              className="cursor-pointer capitalize font-semibold font-montserrat text-base md:text-xl hover:text-white hover:bg-gray-800 transition-all duration-300 ease-in-out py-4 px-3 border-sky-400 border-2"
               onClick={() => setIsOpen(true)}
             >
               create announcement <IoCreate />
