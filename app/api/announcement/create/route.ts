@@ -47,6 +47,7 @@ export const POST = async (req: Request) => {
       text: text.trim(),
       user: authUser.user_id,
       status: AnnouncementStatus.Pending,
+      userId: authUser.user_id,
     };
 
     const request = await Announcement.create(payload);

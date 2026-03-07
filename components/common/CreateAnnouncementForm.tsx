@@ -1,12 +1,14 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -30,6 +32,7 @@ const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
         toast.success("Announcement created successfully");
         setText("");
         setIsSubmitting(false);
+        router.refresh();
         onClose();
       }
     } catch (err: unknown) {
