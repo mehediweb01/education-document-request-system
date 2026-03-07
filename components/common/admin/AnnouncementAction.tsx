@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 
-const AnnouncementAction = () => {
+const AnnouncementAction = ({ isPending }: { isPending: string }) => {
   return (
     <div className="flex justify-end items-center gap-3 flex-wrap">
       <div>
@@ -15,13 +15,15 @@ const AnnouncementAction = () => {
         </Button>
       </div>
       <div>
-        <Button
-          className="bg-green cursor-pointer text-base tracking-wider text-white"
-          variant="outline"
-          type="button"
-        >
-          Publish
-        </Button>
+        {isPending === "pending" && (
+          <Button
+            className="bg-green cursor-pointer text-base tracking-wider text-white"
+            variant="outline"
+            type="button"
+          >
+            Publish
+          </Button>
+        )}
       </div>
     </div>
   );

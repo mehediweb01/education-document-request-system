@@ -52,3 +52,10 @@ export type LoginState = {
   password: string;
   isAdmin: boolean;
 };
+
+export type AnnouncementProps = {
+  id: string;
+  text: string;
+  status: string;
+  userId: string;
+};
