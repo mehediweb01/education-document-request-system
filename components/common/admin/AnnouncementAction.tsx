@@ -9,8 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import axios from "axios";
 import { Edit } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import AnnouncementEditAndCreateForm from "../AnnouncementEditAndCreateForm";
 
 const AnnouncementAction = ({
@@ -23,9 +26,29 @@ const AnnouncementAction = ({
   announcementId: string;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleOpenModal = () => {
     setIsOpen(true);
+  };
+
+  const handlePublish = async () => {
+    try {
+      const response = await axios.patch(`/api/announcement/publish`, {
+        announcementId,
+      });
+
+      if (response.status === 200) {
+        toast.success("Announcement published successfully");
+        router.refresh();
+      }
+    } catch (err: unknown) {
+      if (err instanceof axios.AxiosError) {
+        toast.error(err.response?.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -69,6 +92,7 @@ const AnnouncementAction = ({
             className="bg-green cursor-pointer text-base tracking-wider text-white"
             variant="outline"
             type="button"
+            onClick={handlePublish}
           >
             Publish
           </Button>
