@@ -5,9 +5,19 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
+const AnnouncementEditAndCreateForm = ({
+  onClose,
+  editText,
+  isEdit = false,
+  announcementId,
+}: {
+  onClose: () => void;
+  editText?: string;
+  isEdit?: boolean;
+  announcementId?: string;
+}) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>(editText || "");
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -19,21 +29,36 @@ const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
       e.preventDefault();
       setIsSubmitting(true);
 
-      const response = await axios.post("/api/announcement/create", {
-        text,
-      });
+      if (isEdit) {
+        const response = await axios.patch(`/api/announcement/update`, {
+          text: text?.trim(),
+          announcementId: announcementId,
+        });
 
-      if (response.status !== 201) {
-        toast.error(response.data.message);
-        setIsSubmitting(false);
-      }
+        if (response.status === 200) {
+          toast.success("Announcement updated successfully");
+          setText("");
+          setIsSubmitting(false);
+          router.refresh();
+          onClose();
+        }
+      } else {
+        const response = await axios.post("/api/announcement/create", {
+          text,
+        });
 
-      if (response.status === 201) {
-        toast.success("Announcement created successfully");
-        setText("");
-        setIsSubmitting(false);
-        router.refresh();
-        onClose();
+        if (response.status !== 201) {
+          toast.error(response.data.message);
+          setIsSubmitting(false);
+        }
+
+        if (response.status === 201) {
+          toast.success("Announcement created successfully");
+          setText("");
+          setIsSubmitting(false);
+          router.refresh();
+          onClose();
+        }
       }
     } catch (err: unknown) {
       setIsSubmitting(false);
@@ -67,10 +92,14 @@ const CreateAnnouncementForm = ({ onClose }: { onClose: () => void }) => {
         className="bg-sky-400 text-white px-3 py-1 rounded-md hover:bg-sky-500 transition-all duration-300 ease-in-out cursor-pointer"
         onClick={handleSubmit}
       >
-        {isSubmitting ? "Creating..." : "Create"}
+        {isEdit ? (
+          <>{isSubmitting ? "Updating..." : "Update"}</>
+        ) : (
+          <>{isSubmitting ? "Creating..." : "Create"} </>
+        )}
       </button>
     </>
   );
 };
 
-export default CreateAnnouncementForm;
+export default AnnouncementEditAndCreateForm;

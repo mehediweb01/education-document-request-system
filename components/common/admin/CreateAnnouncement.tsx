@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { IoCreate } from "react-icons/io5";
-import CreateAnnouncementForm from "../CreateAnnouncementForm";
+import AnnouncementEditAndCreateForm from "../AnnouncementEditAndCreateForm";
 
 const CreateAnnouncement = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -40,7 +40,7 @@ const CreateAnnouncement = () => {
             </DialogHeader>
 
             {/* create announcement form */}
-            <CreateAnnouncementForm onClose={() => setIsOpen(false)} />
+            <AnnouncementEditAndCreateForm onClose={() => setIsOpen(false)} />
           </DialogContent>
         </form>
       </Dialog>
