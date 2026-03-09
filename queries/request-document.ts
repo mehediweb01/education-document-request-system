@@ -31,15 +31,29 @@ export const GetARequestDocument = async (requestId: string) => {
   }
 };
 
-export const getAllRequest = async () => {
+export const getAllRequest = async (page: number = 1, limit: number = 10) => {
   try {
-    const requests = await RequestDocument.find().lean();
+    const skip = (page - 1) * limit;
+
+    const requests = await RequestDocument.find()
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const totalRequests = await RequestDocument.countDocuments();
 
     if (!requests) {
       throw new Error("Request not found!");
     }
 
-    return replaceMongoIdInArray(requests);
+    if (!totalRequests) {
+      throw new Error("Total request not found!");
+    }
+
+    return {
+      requests: replaceMongoIdInArray(requests),
+      total: totalRequests,
+    };
   } catch (err: unknown) {
     if (err instanceof Error) {
       throw new Error(err.message);

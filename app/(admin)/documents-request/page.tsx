@@ -8,8 +8,14 @@ export const metadata = {
   description: "This is the documents request page for administrators",
 };
 
-const DocumentsRequest = async () => {
+const DocumentsRequest = async ({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) => {
   const authUser = await getUserFromToken();
+  const page = await searchParams;
+  const currentPage = Number(page.page);
 
   if (!authUser) {
     redirect("/login");
@@ -22,7 +28,7 @@ const DocumentsRequest = async () => {
   return (
     <div>
       <Header />
-      <Requests />
+      <Requests page={currentPage as number} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import RequestTable from "./RequestTable";
 
-const Requests = () => {
+const Requests = ({ page }: { page: number }) => {
   return (
     <div className="py-3 space-y-4">
       <div className="bg-green py-3 px-4 rounded-md">
@@ -9,7 +9,7 @@ const Requests = () => {
         </h1>
       </div>
       <div>
-        <RequestTable />
+        <RequestTable page={page as number} />
       </div>
     </div>
   );
