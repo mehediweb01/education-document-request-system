@@ -153,6 +153,6 @@
   }
 
   .tableCell {
-    @apply text-eerie-black font-medium font-inter tracking-tight text-base text-center border border-slate-200;
+    @apply text-eerie-black font-medium font-inter tracking-tight text-base text-start border border-slate-200;
   }
 }
