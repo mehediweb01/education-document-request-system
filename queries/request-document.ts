@@ -1,4 +1,7 @@
-import { replaceMongoIdInObject } from "@/lib/convertData";
+import {
+  replaceMongoIdInArray,
+  replaceMongoIdInObject,
+} from "@/lib/convertData";
 import { RequestDocument } from "@/models/RequestDocument";
 import mongoose from "mongoose";
 
@@ -22,6 +25,24 @@ export const GetARequestDocument = async (requestId: string) => {
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(error.message);
+    } else {
+      throw new Error("Something went wrong!");
+    }
+  }
+};
+
+export const getAllRequest = async () => {
+  try {
+    const requests = await RequestDocument.find().lean();
+
+    if (!requests) {
+      throw new Error("Request not found!");
+    }
+
+    return replaceMongoIdInArray(requests);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
     } else {
       throw new Error("Something went wrong!");
     }

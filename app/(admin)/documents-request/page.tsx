@@ -1,3 +1,5 @@
+import Header from "@/components/documents-request/Header";
+import Requests from "@/components/documents-request/Requests";
 import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { notFound, redirect } from "next/navigation";
 
@@ -19,7 +21,8 @@ const DocumentsRequest = async () => {
 
   return (
     <div>
-      <h1>Documents Request</h1>
+      <Header />
+      <Requests />
     </div>
   );
 };

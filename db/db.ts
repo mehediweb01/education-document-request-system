@@ -84,3 +84,34 @@ export const documentTypes: {
     name: "Course Completion Certificate",
   },
 ];
+
+export const requestTableHead: { id: number; value: string }[] = [
+  {
+    id: 1,
+    value: "Name",
+  },
+  {
+    id: 2,
+    value: "Registration",
+  },
+  {
+    id: 3,
+    value: "Contact Number",
+  },
+  {
+    id: 4,
+    value: "Course",
+  },
+  {
+    id: 5,
+    value: "Date",
+  },
+  {
+    id: 6,
+    value: "Status",
+  },
+  {
+    id: 7,
+    value: "Document Type",
+  },
+];
