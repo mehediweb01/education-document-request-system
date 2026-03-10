@@ -13,7 +13,7 @@ export const getAUserAndAllOfHisRequestHistory = async (userId: string) => {
 
     const user = await User.findById(userId).select("-password").lean();
     const request = await RequestDocument.find({
-      requestId: user?.requests.requestId,
+      reg: user?.reg,
     }).lean();
 
     if (!user) {
