@@ -18,7 +18,7 @@ export const metadata = {
 const RequestReportPage = async ({
   params,
 }: {
-  params: { userId: string; requestId: string };
+  params: Promise<{ userId: string; requestId: string }>;
 }) => {
   const { requestId, userId } = await params;
   const cookie = await cookies();

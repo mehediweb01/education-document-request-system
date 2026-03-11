@@ -24,7 +24,11 @@ export const generateMetadata = async () => {
   }
 };
 
-const UserAccount = async ({ params }: { params: { userId: string } }) => {
+const UserAccount = async ({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) => {
   const authUser = await getUserFromToken();
   const searchParams = await params;
   const user_id = searchParams.userId;

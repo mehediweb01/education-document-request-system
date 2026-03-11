@@ -9,7 +9,11 @@ export const metadata = {
   description: "This page allows students to request a document",
 };
 
-const RequestDocument = async ({ params }: { params: { userId: string } }) => {
+const RequestDocument = async ({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) => {
   const cookie = await cookies();
   const token = cookie.get("token")?.value;
   const { userId } = await params;
