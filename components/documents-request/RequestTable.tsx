@@ -12,6 +12,7 @@ import {
 } from "../ui/table";
 import Pagination from "./Pagination";
 import UpdateStatus from "./UpdateStatus";
+import UploadPdf from "./UploadPdf";
 
 const groupByPerson = (requests: RequestProps[]) => {
   const map: Record<string, RequestProps[]> = {};
@@ -30,6 +31,7 @@ const RequestTable = async ({ page }: { page: number }) => {
   return (
     <>
       <Table>
+        {/* table header */}
         <TableHeader>
           <TableRow>
             {requestTableHead.map((val) => (
@@ -39,6 +41,7 @@ const RequestTable = async ({ page }: { page: number }) => {
             ))}
           </TableRow>
         </TableHeader>
+        {/* table body */}
         <TableBody>
           {Object.entries(groupedRequests).map(([key, group]) => {
             const [name, reg, studentNumber] = key.split("-");
@@ -64,7 +67,7 @@ const RequestTable = async ({ page }: { page: number }) => {
                 {/* Other columns */}
                 <TableCell className="tableCell">{item.course}</TableCell>
                 <TableCell className="tableCell">
-                  {dateConvert(item.createdAt as Date)}
+                  {dateConvert(item.createdAt as Date, true)}
                 </TableCell>
                 <TableCell className="tableCell">
                   <UpdateStatus
@@ -81,6 +84,9 @@ const RequestTable = async ({ page }: { page: number }) => {
                       {doc}
                     </p>
                   ))}
+                </TableCell>
+                <TableCell className="tableCell">
+                  <UploadPdf />
                 </TableCell>
               </TableRow>
             ));
