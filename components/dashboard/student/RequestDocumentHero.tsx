@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const RequestDocumentHero = ({ userId }: { userId: string }) => {
   return (
-    <div className="mt-4 md:mt-8">
+    <div className="my-4 md:my-8">
       <h1 className="font-bold font-montserrat text-eerie-black tracking-[1px] text-base sm:text-xl md:text-2xl uppercase">
         Request academic documents
       </h1>
