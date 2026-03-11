@@ -15,7 +15,6 @@ export interface UserProps {
   updatedAt?: string;
 }
 
-
 export interface RequestProps {
   id?: string;
   name: string;
@@ -29,4 +28,5 @@ export interface RequestProps {
   reg: number;
   createdAt?: string | Date;
   status: Status;
+  pdf?: string;
 }

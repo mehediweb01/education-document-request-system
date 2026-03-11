@@ -47,6 +47,11 @@ const RequestDocumentSchema = new Schema(
       default: Status.Pending,
       required: true,
     },
+    pdf: {
+      type: Schema.Types.ObjectId,
+      ref: "Pdf",
+      default: null,
+    },
   },
   {
     timestamps: true,

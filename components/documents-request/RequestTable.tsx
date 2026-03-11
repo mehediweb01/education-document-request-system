@@ -1,6 +1,7 @@
 import { requestTableHead } from "@/db/db";
 import { RequestProps } from "@/interface/interface";
 import { dateConvert } from "@/lib/DateConvert";
+import { groupByPerson } from "@/lib/utils";
 import { getAllRequest } from "@/queries/request-document";
 import {
   Table,
@@ -13,16 +14,6 @@ import {
 import Pagination from "./Pagination";
 import UpdateStatus from "./UpdateStatus";
 import UploadPdf from "./UploadPdf";
-
-const groupByPerson = (requests: RequestProps[]) => {
-  const map: Record<string, RequestProps[]> = {};
-  requests.forEach((req) => {
-    const key = `${req.name}-${req.reg}-${req.studentNumber}`;
-    if (!map[key]) map[key] = [];
-    map[key].push(req);
-  });
-  return map;
-};
 
 const RequestTable = async ({ page }: { page: number }) => {
   const { requests, total } = await getAllRequest(page, 10);
@@ -73,6 +64,7 @@ const RequestTable = async ({ page }: { page: number }) => {
                   <UpdateStatus
                     status={item.status}
                     requestId={item.id as string}
+                    pdf={item.pdf?.toString() as string}
                   />
                 </TableCell>
                 <TableCell className="tableCell space-y-1">
@@ -85,9 +77,18 @@ const RequestTable = async ({ page }: { page: number }) => {
                     </p>
                   ))}
                 </TableCell>
-                <TableCell className="tableCell">
-                  <UploadPdf />
-                </TableCell>
+                {!item.pdf ? (
+                  <TableCell className="tableCell">
+                    <UploadPdf
+                      email={item.email as string}
+                      id={item.id as string}
+                    />
+                  </TableCell>
+                ) : (
+                  <TableCell className="tableCell">
+                    <p className="text-green-600 text-center">Uploaded</p>
+                  </TableCell>
+                )}
               </TableRow>
             ));
           })}

@@ -12,7 +12,7 @@ import {
 } from "../ui/dialog";
 import UploadPdfForm from "./UploadPdfForm";
 
-const UploadPdf = () => {
+const UploadPdf = ({ email, id }: { email: string; id: string }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -34,7 +34,11 @@ const UploadPdf = () => {
               <DialogTitle>Upload PDF</DialogTitle>
               <DialogDescription>Upload your PDF file here.</DialogDescription>
             </DialogHeader>
-            <UploadPdfForm />
+            <UploadPdfForm
+              email={email as string}
+              id={id as string}
+              onClose={() => setIsOpen(false)}
+            />
           </DialogContent>
         </form>
       </Dialog>

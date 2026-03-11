@@ -3,15 +3,17 @@
 import { Status } from "@/enum/enum";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const UpdateStatus = ({
   status,
   requestId,
+  pdf,
 }: {
   status: string;
   requestId: string;
+  pdf: string;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [updateStatus, setUpdateStatus] = useState<string>(status);
@@ -41,12 +43,16 @@ const UpdateStatus = ({
     }
   };
 
+  useEffect(() => {
+    setUpdateStatus(status);
+  }, [status]);
+
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       <select
         name="status"
         id="status"
-        className="border border-slate-300/50 p-1 rounded-md"
+        className={`border border-slate-300/50 p-1 rounded-md ${pdf ? "text-green" : "text-black"}`}
         value={updateStatus}
         onChange={(e) => setUpdateStatus(e.target.value)}
         disabled={!isOpen}
@@ -59,25 +65,27 @@ const UpdateStatus = ({
       </select>
 
       {/* action button */}
-      <div className="flex items-center justify-center gap-3">
-        <button
-          onClick={isOpen ? handleSave : handleOpen}
-          className={`px-3 py-1.5 rounded-md font-medium ${isOpen ? "bg-green-500 hover:bg-green-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"} transition-all duration-200 ease-in-out cursor-pointer`}
-        >
-          {isOpen ? "Save" : "Update"}
-        </button>
-        {isOpen && (
+      {!pdf && (
+        <div className="flex items-center justify-center gap-3">
           <button
-            onClick={() => {
-              setIsOpen(false);
-              setUpdateStatus(status);
-            }}
-            className="text-red-500 cursor-pointer"
+            onClick={isOpen ? handleSave : handleOpen}
+            className={`px-3 py-1.5 rounded-md font-medium ${isOpen ? "bg-green-500 hover:bg-green-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"} transition-all duration-200 ease-in-out cursor-pointer`}
           >
-            X
+            {isOpen ? "Save" : "Update"}
           </button>
-        )}
-      </div>
+          {isOpen && (
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                setUpdateStatus(status);
+              }}
+              className="text-red-500 cursor-pointer"
+            >
+              X
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
