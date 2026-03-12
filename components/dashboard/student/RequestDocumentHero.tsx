@@ -13,7 +13,7 @@ const RequestDocumentHero = ({ userId }: { userId: string }) => {
       </p>
       {/* request now  */}
       <Link
-        href={`/dashboard/student/request-document/${userId}`}
+        href={`/dashboard/student/${userId}/request-document`}
         className="text-white bg-linear-to-r from-blue-500/80 to-sky-400/60 px-4 py-1 rounded-md mt-4 btn-animate capitalize text-sm sm:text-base md:text-xl font-semibold font-inter hover:text-eerie-black hover:font-bold hover:transition-all hover:duration-300 hover:ease-in-out hover:from-sky-400 hover:to-white hover:border hover:border-sky-400 flex items-center gap-1 w-fit shadow-sm shadow-black"
       >
         request document <ArrowRight />

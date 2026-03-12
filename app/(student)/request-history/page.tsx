@@ -1,8 +1,8 @@
 import ReqHistory from "@/components/dashboard/student/request-history/ReqHistory";
 import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Request History",
@@ -10,20 +10,7 @@ export const metadata = {
 };
 
 const RequestHistory = async () => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
-
-  if (!token) {
-    redirect("/login");
-  }
-
-  const decoded = jwt.verify(
-    token as string,
-    process.env.JWT_SECRET as string,
-  ) as {
-    role: string;
-    user_id: string;
-  };
+  const authUser = await getUserFromToken();
 
   return (
     <>
@@ -40,7 +27,7 @@ const RequestHistory = async () => {
             </h1>
           </div>
           <div className="mt-6 md:mt-8 ">
-            <ReqHistory userId={decoded.user_id} />
+            <ReqHistory userId={authUser?.user_id as string} />
           </div>
         </div>
 

@@ -2,8 +2,8 @@
 
 import InputField from "@/components/common/InputField";
 import { Button } from "@/components/ui/button";
+import { Status } from "@/enum/enum";
 import { RequestProps, UserProps } from "@/interface/interface";
-import {Status} from "@/enum/enum"
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -100,7 +100,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
             status: Status.Pending,
           });
           router.push(
-            `/dashboard/student/request-document/${user?.id}/${response.data.request._id}`,
+            `/dashboard/student/${user?.id}/request-document/${response.data.request._id}`,
           );
         }
       }

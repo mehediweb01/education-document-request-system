@@ -102,6 +102,7 @@ export const POST = async (req: Request) => {
           user: {
             email: user.email,
             role: user.role,
+            id: user._id,
           },
         },
         {

@@ -4,9 +4,8 @@ import RequestReport from "@/components/dashboard/student/request-report/Request
 import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
 import { Button } from "@/components/ui/button";
 import { RequestProps } from "@/interface/interface";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { GetARequestDocument } from "@/queries/request-document";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -18,26 +17,18 @@ export const metadata = {
 const RequestReportPage = async ({
   params,
 }: {
-  params: Promise<{ userId: string; requestId: string }>;
+  params: Promise<{ user_id: string; requestId: string }>;
 }) => {
-  const { requestId, userId } = await params;
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
-  const decoded = jwt.verify(
-    token as string,
-    process.env.JWT_SECRET as string,
-  ) as {
-    role: string;
-    user_id: string;
-  };
+  const { requestId, user_id } = await params;
 
+  const authUser = await getUserFromToken();
   const requestData = await GetARequestDocument(requestId as string);
 
-  if (!token) {
+  if (!authUser) {
     redirect("/login");
   }
 
-  if (decoded.user_id !== userId) {
+  if (authUser?.user_id !== user_id) {
     return <RequestNotFound />;
   }
 

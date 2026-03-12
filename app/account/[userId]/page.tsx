@@ -5,6 +5,8 @@ import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { getUserById } from "@/queries/users";
 import { notFound, redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 // dynamically generate metadata based on user role
 export const generateMetadata = async () => {
   const user = await getUserFromToken();
@@ -30,12 +32,7 @@ const UserAccount = async ({
   params: Promise<{ userId: string }>;
 }) => {
   const authUser = await getUserFromToken();
-  const searchParams = await params;
-  const user_id = searchParams.userId;
-
-  if (!authUser) {
-    redirect("/login");
-  }
+  const { userId: user_id } = await params;
 
   if (authUser?.user_id !== user_id) {
     notFound();

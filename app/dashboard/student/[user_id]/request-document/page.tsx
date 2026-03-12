@@ -1,8 +1,6 @@
 import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
 import RequestDocumentForm from "@/components/dashboard/student/RequestDocumentForm";
 import { getUserById } from "@/queries/users";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Request Documents form",
@@ -12,17 +10,11 @@ export const metadata = {
 const RequestDocument = async ({
   params,
 }: {
-  params: Promise<{ userId: string }>;
+  params: Promise<{ user_id: string }>;
 }) => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
-  const { userId } = await params;
+  const { user_id } = await params;
 
-  if (!token) {
-    redirect("/login");
-  }
-
-  const user = await getUserById(userId);
+  const user = await getUserById(user_id as string);
 
   return (
     <div className="w-full mx-auto flex sm:flex-row flex-col-reverse justify-between items-start gap-2">

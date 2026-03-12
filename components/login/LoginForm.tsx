@@ -59,9 +59,9 @@ const LoginForm = () => {
       if (data) {
         toast.success(data.message);
         if (data.user.role === "admin") {
-          router.push(`/dashboard/admin`);
+          router.push(`/dashboard/admin/${data.user.id}`);
         } else if (data.user.role === "student") {
-          router.push(`/dashboard/student`);
+          router.push(`/dashboard/student/${data.user.id}`);
         } else {
           router.push("/");
         }

@@ -3,7 +3,9 @@ import AdminDashboardHero from "@/components/dashboard/admin/AdminDashboardHero"
 import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { getAnnouncementsByUser } from "@/queries/announcement";
 import { AnnouncementProps } from "@/types/type";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Admin Dashboard",
@@ -12,10 +14,6 @@ export const metadata = {
 
 const AdminPage = async () => {
   const authUser = await getUserFromToken();
-
-  if (!authUser) {
-    redirect("/login");
-  }
 
   if (authUser?.role !== "admin") {
     notFound();

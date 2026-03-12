@@ -1,11 +1,11 @@
 import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
 import DocumentTypesCard from "@/components/documents/DocumentTypesCard";
 import { documentTypes } from "@/db/db";
-import jwt from "jsonwebtoken";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { ArrowRight } from "lucide-react";
-import { cookies } from "next/headers";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Available documents",
@@ -13,17 +13,7 @@ export const metadata = {
 };
 
 const DocumentsPage = async () => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
-
-  if (!token) {
-    redirect("/login");
-  }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-    user_id: string;
-    role: string;
-  };
+  const authUser = await getUserFromToken();
 
   return (
     <>
@@ -47,7 +37,7 @@ const DocumentsPage = async () => {
           {/* request now */}
           <div className="mt-8 md:mt-12">
             <Link
-              href={`/dashboard/student/request-document/${decoded.user_id}`}
+              href={`/dashboard/student/${authUser?.user_id as string}/request-document`}
               className="text-white bg-linear-to-r from-blue-500/80 to-sky-400/60 px-4 py-2 rounded-md mt-4 btn-animate capitalize text-sm sm:text-base md:text-xl font-semibold font-inter hover:text-eerie-black hover:font-bold hover:transition-all hover:duration-300 hover:ease-in-out hover:from-sky-400 hover:to-white hover:border hover:border-sky-400 flex items-center gap-1 w-fit shadow-sm shadow-black"
             >
               request document <ArrowRight />
