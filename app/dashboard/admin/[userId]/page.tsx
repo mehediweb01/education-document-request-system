@@ -5,15 +5,18 @@ import { getAnnouncementsByUser } from "@/queries/announcement";
 import { AnnouncementProps } from "@/types/type";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 export const metadata = {
   title: "Admin Dashboard",
   description: "This is the admin dashboard page",
 };
 
-const AdminPage = async () => {
+const AdminPage = async ({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) => {
   const authUser = await getUserFromToken();
+  const { userId } = await params;
 
   if (authUser?.role !== "admin") {
     notFound();
@@ -22,6 +25,10 @@ const AdminPage = async () => {
   const announcement = await getAnnouncementsByUser(
     authUser?.user_id as string,
   );
+
+  if (authUser?.user_id !== userId || authUser?.role !== "admin") {
+    notFound();
+  }
 
   if (!announcement) {
     notFound();

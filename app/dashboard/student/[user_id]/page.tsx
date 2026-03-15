@@ -1,7 +1,9 @@
 import InfoCard from "@/components/dashboard/InfoCard";
 import RequestCreationProcess from "@/components/dashboard/student/RequestCreationProcess";
 import RequestDocumentHero from "@/components/dashboard/student/RequestDocumentHero";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { getAllAnnouncements } from "@/queries/announcement";
+import { notFound } from "next/navigation";
 
 export const metadata = {
   title: "Student dashboard",
@@ -13,8 +15,23 @@ const StudentPage = async ({
 }: {
   params: Promise<{ user_id: string }>;
 }) => {
+  const authUser = await getUserFromToken();
   const { user_id } = await params;
   const announcements = await getAllAnnouncements();
+
+  if (!announcements) {
+    return (
+      <div className="w-full mx-auto flex sm:flex-row flex-col-reverse justify-between items-center gap-2 mt-4 md:mt-8">
+        <div className="w-full sm:w-[60%] lg:w-[75%] mt-0 md:-mt-12">
+          <RequestDocumentHero userId={user_id as string} />
+        </div>
+      </div>
+    );
+  }
+
+  if (authUser?.user_id !== user_id || authUser?.role !== "student") {
+    notFound();
+  }
 
   return (
     <>

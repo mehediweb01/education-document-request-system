@@ -37,7 +37,7 @@ const HistoryCard = ({
         <TableCell className="tableCell">
           <Button type="button" variant={"outline"}>
             <Link
-              href={`/dashboard/student/request-document/${userId}/${doc.id}`}
+              href={`/dashboard/student/${userId}/request-document/${doc.id}`}
               className="cursor-pointer"
             >
               View

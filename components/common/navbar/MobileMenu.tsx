@@ -42,7 +42,7 @@ const MobileMenu = ({
                 }
               >
                 <Link
-                  href={`${items.href}/${items.name === "Account" ? user?.id : ""}?role=${user?.role === "student" ? "student" : ""}`}
+                  href={`${items.href}/${items.name === `Dashboard` ? user?.id : ""}/${items.name === "Account" ? user?.id : ""}?role=${user?.role === "student" ? "student" : ""}`}
                 >
                   {items.name}
                 </Link>
