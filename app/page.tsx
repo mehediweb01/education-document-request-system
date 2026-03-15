@@ -1,29 +1,19 @@
 import { RequireRole } from "@/lib/auth";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
+import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 const Home = async () => {
-  const cookie = await cookies();
-  const token = cookie.get("token")?.value;
+  const authUser = await getUserFromToken();
 
-  if (token) {
-    const decoded = jwt.verify(
-      token as string,
-      process.env.JWT_SECRET as string,
-    ) as {
-      role: string;
-      user_id: string;
-    };
+  if (authUser?.token) {
+    RequireRole(authUser?.role as string);
 
-    RequireRole(decoded.role);
-
-    if (decoded.role === "admin") {
-      redirect(`/dashboard/admin/${decoded?.user_id as string}`);
-    } else if (decoded.role === "student") {
-      redirect(`/dashboard/student/${decoded?.user_id as string}`);
+    if (authUser?.role === "admin") {
+      redirect(`/dashboard/admin/${authUser?.user_id as string}`);
+    } else if (authUser?.role === "student") {
+      redirect(`/dashboard/student/${authUser?.user_id as string}`);
     } else {
       redirect("/login");
     }
