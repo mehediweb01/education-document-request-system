@@ -12,6 +12,7 @@ const InputField = ({
   disabled,
   required,
   checked,
+  readOnly,
 }: InputFieldType) => {
   const isCheckbox = type === "checkbox";
   return (
@@ -26,7 +27,7 @@ const InputField = ({
         className={cn(
           isCheckbox
             ? "w-4 h-4 cursor-pointer"
-            : "input disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-100",
+            : `input disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-100 ${readOnly ? "bg-gray-100" : ""}`,
           className,
         )}
         id={name}
@@ -36,6 +37,7 @@ const InputField = ({
         placeholder={!isCheckbox ? placeholder : undefined}
         disabled={disabled}
         required={required}
+        readOnly={readOnly}
       />
       {isCheckbox && (
         <label htmlFor={name} className="cursor-pointer">

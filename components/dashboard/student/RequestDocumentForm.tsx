@@ -63,6 +63,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
       if (inputValue.documentType.length === 0) {
         setLoading(false);
         toast.warning("Please select at least one document type");
+        return;
       } else {
         setLoading(true);
 
@@ -132,7 +133,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           onChange={handleChange}
           value={inputValue?.name}
           label="Full Name"
-          disabled={true}
+          readOnly={true}
         />
 
         <InputField
@@ -142,7 +143,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           onChange={handleChange}
           value={inputValue?.email}
           label="Email"
-          disabled={true}
+          readOnly={true}
         />
 
         <InputField
@@ -152,7 +153,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           onChange={handleChange}
           value={inputValue?.studentNumber}
           label="Student Number"
-          disabled={true}
+          readOnly={true}
         />
 
         <InputField
@@ -162,7 +163,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           onChange={handleChange}
           value={inputValue?.reg}
           label="Registration Number"
-          disabled={true}
+          readOnly={true}
         />
 
         <InputField
@@ -172,7 +173,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           onChange={handleChange}
           value={inputValue?.session}
           label="Session"
-          disabled={true}
+          readOnly={true}
         />
 
         <InputField
@@ -182,7 +183,7 @@ const RequestDocumentForm = ({ user }: { user: UserProps | null }) => {
           onChange={handleChange}
           value={inputValue?.department}
           label="Department"
-          disabled={true}
+          readOnly={true}
         />
 
         <InputField

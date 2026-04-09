@@ -45,6 +45,7 @@ export type InputFieldType = {
   disabled?: boolean;
   required?: boolean;
   checked?: boolean;
+  readOnly?: boolean;
 };
 
 export type LoginState = {
