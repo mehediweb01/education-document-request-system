@@ -40,6 +40,10 @@ const Navbar: React.FC = (): JSX.Element => {
     };
 
     checkAuthorization();
+
+    return () => {
+      setUser(null);
+    };
   }, [router, pathname]);
 
   const handleLogout = async () => {
@@ -77,7 +81,7 @@ const Navbar: React.FC = (): JSX.Element => {
                     }
                   >
                     <Link
-                      href={`${items.href}/${items.name === "Account" ? user?.id : ""}?role=${user?.role === "admin" ? "admin" : ""}`}
+                      href={`${items.href}/${items.name === `Dashboard` ? user?.id : ""}/${items.name === "Account" ? user?.id : ""}${items.name === "Dashboard" ? "" : `?role=${user?.role === "admin" ? "admin" : ""}`}`}
                     >
                       {items.name}
                     </Link>
@@ -93,7 +97,7 @@ const Navbar: React.FC = (): JSX.Element => {
                     }
                   >
                     <Link
-                      href={`${items.href}/${items.name === `Dashboard` ? user?.id : ""}/${items.name === "Account" ? user?.id : ""}?role=${user?.role === "student" ? "student" : ""}`}
+                      href={`${items.href}/${items.name === `Dashboard` ? user?.id : ""}/${items.name === "Account" ? user?.id : ""}${items.name === "Dashboard" ? "" : `?role=${user?.role === "student" ? "student" : ""}`}`}
                     >
                       {items.name}
                     </Link>
@@ -101,6 +105,7 @@ const Navbar: React.FC = (): JSX.Element => {
                 ))}
           </ul>
         </div>
+
         {/* mobile menu */}
         <div className="md:hidden block">
           <Button

@@ -1,15 +1,18 @@
 import { AnnouncementStatus } from "@/enum/enum";
 import { replaceMongoIdInArray } from "@/lib/convertData";
 import { Announcement } from "@/models/announcement";
+import { connectDB } from "@/mongodb/connectDB";
 
 export const getAllAnnouncements = async () => {
   try {
+    await connectDB();
+
     const announcements = await Announcement.find({
       status: AnnouncementStatus.Published,
     }).lean();
 
-    if (!announcements) {
-      throw new Error("Announcement not found!");
+    if (announcements.length === 0) {
+      throw new Error("Announcements not found!");
     }
 
     return replaceMongoIdInArray(announcements);
@@ -27,6 +30,8 @@ export const getAnnouncementsByUser = async (userId: string) => {
     if (!userId) {
       throw new Error("user not found");
     }
+
+    await connectDB();
 
     const announcements = await Announcement.find({ userId }).lean();
 

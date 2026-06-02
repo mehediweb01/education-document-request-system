@@ -3,12 +3,15 @@ import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { Pdf } from "@/models/pdf";
 import { RequestDocument } from "@/models/RequestDocument";
 import { User } from "@/models/user";
+import { connectDB } from "@/mongodb/connectDB";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 
 export const POST = async (req: Request) => {
   try {
+    await connectDB();
+
     const authUser = await getUserFromToken();
 
     if (!authUser) {

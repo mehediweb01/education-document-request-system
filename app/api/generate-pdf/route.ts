@@ -1,3 +1,4 @@
+import { connectDB } from "@/mongodb/connectDB";
 import { NextResponse } from "next/server";
 import { PDFDocument, StandardFonts } from "pdf-lib";
 
@@ -5,6 +6,8 @@ export const runtime = "nodejs";
 
 export const POST = async (req: Request) => {
   try {
+    await connectDB();
+
     const data = await req.json();
 
     const pdfDoc = await PDFDocument.create();

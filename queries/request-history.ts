@@ -4,9 +4,12 @@ import {
 } from "@/lib/convertData";
 import { RequestDocument } from "@/models/RequestDocument";
 import { User } from "@/models/user";
+import { connectDB } from "@/mongodb/connectDB";
 
 export const getAUserAndAllOfHisRequestHistory = async (userId: string) => {
   try {
+    await connectDB();
+
     if (!userId) {
       throw new Error("user not found");
     }

@@ -3,10 +3,13 @@ import {
   replaceMongoIdInObject,
 } from "@/lib/convertData";
 import { RequestDocument } from "@/models/RequestDocument";
+import { connectDB } from "@/mongodb/connectDB";
 import mongoose from "mongoose";
 
 export const GetARequestDocument = async (requestId: string) => {
   try {
+    await connectDB();
+
     if (!requestId) {
       return null;
     }
@@ -33,6 +36,8 @@ export const GetARequestDocument = async (requestId: string) => {
 
 export const getAllRequest = async (page: number = 1, limit: number = 10) => {
   try {
+    await connectDB();
+
     const skip = (page - 1) * limit;
 
     const requests = await RequestDocument.find()

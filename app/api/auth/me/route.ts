@@ -1,9 +1,12 @@
 import { User } from "@/models/user";
+import { connectDB } from "@/mongodb/connectDB";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
+  await connectDB();
+
   const token = (await cookies()).get("token")?.value;
 
   if (!token) {

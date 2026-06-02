@@ -2,10 +2,13 @@ import { AnnouncementStatus } from "@/enum/enum";
 import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { Announcement } from "@/models/announcement";
 import { User } from "@/models/user";
+import { connectDB } from "@/mongodb/connectDB";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   try {
+    await connectDB();
+
     const body = await req.json();
     const { text } = body;
     const authUser = await getUserFromToken();

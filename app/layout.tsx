@@ -2,12 +2,16 @@ import Container from "@/components/common/Container";
 import Footer from "@/components/common/footer/Footer";
 import Navbar from "@/components/common/navbar/Navbar";
 import Loading from "@/loading";
-import { connectDB } from "@/mongodb/connectDB";
 import type { Metadata } from "next";
 import { Inter, Montserrat, Roboto } from "next/font/google";
+import dns from "node:dns/promises";
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
+
+if (process.env.NODE_ENV === "development") {
+  dns.setServers(["1.1.1.1"]);
+}
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,9 +42,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // database connect
-  await connectDB();
-
   return (
     <html lang="en">
       <body

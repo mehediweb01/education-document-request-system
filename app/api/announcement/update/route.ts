@@ -1,9 +1,12 @@
 import { getUserFromToken } from "@/lib/auth/getAuthUser";
 import { Announcement } from "@/models/announcement";
+import { connectDB } from "@/mongodb/connectDB";
 import { NextResponse } from "next/server";
 
 export const PATCH = async (req: Request) => {
   try {
+    await connectDB();
+
     const body = await req.json();
     const { text, announcementId } = body;
 

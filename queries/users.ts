@@ -1,8 +1,11 @@
 import { replaceMongoIdInObject } from "@/lib/convertData";
 import { User } from "@/models/user";
+import { connectDB } from "@/mongodb/connectDB";
 
 export const getUserById = async (userId: string) => {
   try {
+    await connectDB();
+
     const user = await User.findById(userId)
       .select(["-password", "-requests"])
       .lean();
