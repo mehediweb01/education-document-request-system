@@ -10,18 +10,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import axios from "axios";
-import { Edit } from "lucide-react";
+import { DeleteIcon, Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { MdPublish, MdUnpublished } from "react-icons/md";
 import { toast } from "react-toastify";
 import AnnouncementEditAndCreateForm from "../AnnouncementEditAndCreateForm";
 
 const AnnouncementAction = ({
-  isPending,
+  status,
   text,
   announcementId,
 }: {
-  isPending: string;
+  status: string;
   text: string;
   announcementId: string;
 }) => {
@@ -40,6 +41,44 @@ const AnnouncementAction = ({
 
       if (response.status === 200) {
         toast.success("Announcement published successfully");
+        router.refresh();
+      }
+    } catch (err: unknown) {
+      if (err instanceof axios.AxiosError) {
+        toast.error(err.response?.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
+  const handleUnpublish = async () => {
+    try {
+      const response = await axios.patch(`/api/announcement/unpublish`, {
+        announcementId,
+      });
+
+      if (response.status === 200) {
+        toast.success("Announcement unpublished successfully");
+        router.refresh();
+      }
+    } catch (err: unknown) {
+      if (err instanceof axios.AxiosError) {
+        toast.error(err.response?.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `/api/announcement/delete/${announcementId}`,
+      );
+
+      if (response.status === 200) {
+        toast.success("Announcement deleted successfully");
         router.refresh();
       }
     } catch (err: unknown) {
@@ -87,16 +126,37 @@ const AnnouncementAction = ({
         </Dialog>
       </div>
       <div>
-        {isPending === "pending" && (
+        {status === "pending" && (
           <Button
-            className="bg-green cursor-pointer text-base tracking-wider text-white"
+            className="bg-[#14B8A6] hover:bg-[#0D9488] cursor-pointer text-base tracking-wider text-black"
             variant="outline"
             type="button"
             onClick={handlePublish}
           >
-            Publish
+            Publish <MdPublish />
           </Button>
         )}
+
+        {status === "published" && (
+          <Button
+            className="bg-[#F59E0B] hover:bg-[#D97706] cursor-pointer text-base tracking-wider text-black transition-all duration-300"
+            variant="outline"
+            type="button"
+            onClick={handleUnpublish}
+          >
+            Unpublish <MdUnpublished />
+          </Button>
+        )}
+      </div>
+      <div>
+        <Button
+          className="bg-[#EF4444] hover:bg-red-200 cursor-pointer text-base tracking-wider text-white hover:text-red-600 transition-all duration-300"
+          variant="outline"
+          type="button"
+          onClick={handleDelete}
+        >
+          Delete <DeleteIcon />
+        </Button>
       </div>
     </div>
   );

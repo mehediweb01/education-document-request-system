@@ -23,7 +23,7 @@ const AnnouncementCard = ({
       {/* footer acton */}
       <div>
         <AnnouncementAction
-          isPending={announcement.status}
+          status={announcement.status}
           text={announcement.text}
           announcementId={announcement.id}
         />
