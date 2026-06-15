@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const groupByPerson = (requests: RequestProps[]) => {
   const map: Record<string, RequestProps[]> = {};
   requests.forEach((req) => {
-    const key = `${req.name}-${req.reg}-${req.studentNumber}`;
+    const key = `${req.reg}-${req.studentNumber}`;
     if (!map[key]) map[key] = [];
     map[key].push(req);
   });

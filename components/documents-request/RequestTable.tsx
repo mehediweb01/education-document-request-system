@@ -35,17 +35,11 @@ const RequestTable = async ({ page }: { page: number }) => {
         {/* table body */}
         <TableBody>
           {Object.entries(groupedRequests).map(([key, group]) => {
-            const [name, reg, studentNumber] = key.split("-");
+            const [reg, studentNumber] = key.split("-");
             return group.map((item, index) => (
               <TableRow key={item.id}>
                 {index === 0 && (
                   <>
-                    <TableCell
-                      rowSpan={group.length}
-                      className="tableCell font-semibold text-start capitalize"
-                    >
-                      {name}
-                    </TableCell>
                     <TableCell rowSpan={group.length} className="tableCell">
                       {reg}
                     </TableCell>
@@ -56,6 +50,7 @@ const RequestTable = async ({ page }: { page: number }) => {
                 )}
 
                 {/* Other columns */}
+                <TableCell className="tableCell">{item.name}</TableCell>
                 <TableCell className="tableCell">{item.course}</TableCell>
                 <TableCell className="tableCell">
                   {dateConvert(item.createdAt as Date, true)}

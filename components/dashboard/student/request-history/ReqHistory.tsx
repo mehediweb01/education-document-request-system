@@ -36,16 +36,26 @@ const ReqHistory = async ({ userId }: { userId: string }) => {
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {request.map((item) => (
-              <HistoryCard
-                key={item.id}
-                doc={item as RequestProps}
-                userId={userId}
-              />
-            ))}
-          </TableBody>
+          {request.length > 0 && (
+            <TableBody>
+              {request
+                .sort((a, b) => b.createdAt - a.createdAt)
+                .map((item) => (
+                  <HistoryCard
+                    key={item.id}
+                    doc={item as RequestProps}
+                    userId={userId}
+                  />
+                ))}
+            </TableBody>
+          )}
         </Table>
+
+        {request.length === 0 && (
+          <h1 className="text-center py-4 text-2xl font-semibold text-black font-inter flex justify-center items-center">
+            No Request Found!
+          </h1>
+        )}
       </div>
     </div>
   );

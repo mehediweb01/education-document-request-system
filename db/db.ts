@@ -88,15 +88,15 @@ export const documentTypes: {
 export const requestTableHead: { id: number; value: string }[] = [
   {
     id: 1,
-    value: "Name",
-  },
-  {
-    id: 2,
     value: "Registration",
   },
   {
-    id: 3,
+    id: 2,
     value: "Contact Number",
+  },
+  {
+    id: 3,
+    value: "Name",
   },
   {
     id: 4,
