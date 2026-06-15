@@ -1,26 +1,10 @@
-// date convert
-export const dateConvert = (
-  date: string | Date,
-  isOnlyDate: boolean = false,
-): string => {
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
-  if (isOnlyDate) {
-    return new Intl.DateTimeFormat("en-US", {
-      timeZone: userTimeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }).format(new Date(date));
-  }
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-  return new Intl.DateTimeFormat("en-US", {
-    timeZone: userTimeZone,
-    year: "numeric",
-    month: "long",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  }).format(new Date(date));
+export const dateConvert = (date: string) => {
+  return dayjs(date).tz("Asia/Dhaka").format("DD MMMM YYYY, hh:mm A");
 };
