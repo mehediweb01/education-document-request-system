@@ -34,7 +34,7 @@ const RequestReport = ({ report }: { report: RequestProps }) => {
               <p className="font-semibold text-xl font-inter text-eerie-black">
                 Date:{" "}
                 <span className="text-base font-medium">
-                  {dateConvert(createdAt as Date)}
+                  {dateConvert(createdAt as string)}
                 </span>
               </p>
             </div>

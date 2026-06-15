@@ -53,7 +53,7 @@ const RequestTable = async ({ page }: { page: number }) => {
                 <TableCell className="tableCell">{item.name}</TableCell>
                 <TableCell className="tableCell">{item.course}</TableCell>
                 <TableCell className="tableCell">
-                  {dateConvert(item.createdAt as Date, true)}
+                  {dateConvert(item.createdAt as string)}
                 </TableCell>
                 <TableCell className="tableCell">
                   <UpdateStatus

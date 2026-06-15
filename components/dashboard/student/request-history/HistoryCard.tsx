@@ -22,7 +22,7 @@ const HistoryCard = ({
           {doc.status}
         </TableCell>
         <TableCell className="tableCell">
-          {dateConvert(doc.createdAt as Date)}
+          {dateConvert(doc.createdAt as string)}
         </TableCell>
         <TableCell className="tableCell space-y-1">
           {doc.documentType.map((item) => (
